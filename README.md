@@ -8,7 +8,7 @@
 
 A comprehensive financial management application built with React and TypeScript that helps you track your income and expenses.
 
-![Expense Tracker Screenshot](https://via.placeholder.com/800x450.png?text=Expense+Tracker+Screenshot)
+[//]: # (![Expense Tracker Screenshot]&#40;https://via.placeholder.com/800x450.png?text=Expense+Tracker+Screenshot&#41;)
 
 ## 🌟 Features
 
@@ -57,14 +57,14 @@ This project includes Docker configuration for easy deployment.
 
 1. Build and start the container:
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 2. Access the application at [http://localhost](http://localhost)
 
 3. Stop the container:
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 ### Using Docker Directly
