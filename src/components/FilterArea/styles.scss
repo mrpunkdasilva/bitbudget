@@ -1,0 +1,117 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.filter-area {
+  background-color: v.$white;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md;
+  margin-bottom: v.$spacing-md;
+  box-shadow: v.$box-shadow;
+  border: 2px solid v.$primary-color;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: v.$spacing-md;
+  }
+  
+  &__title {
+    font-size: v.$font-size-large;
+    font-weight: bold;
+    color: v.$primary-color;
+  }
+  
+  &__toggle-button {
+    background-color: v.$primary-color;
+    color: v.$white;
+    border: none;
+    padding: v.$spacing-xs v.$spacing-sm;
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    font-size: v.$font-size-small;
+    transition: background-color v.$transition-speed;
+    
+    &:hover {
+      background-color: darken(v.$primary-color, 10%);
+    }
+  }
+  
+  &__content {
+    animation: slideDown 0.3s ease;
+  }
+  
+  &__row {
+    display: flex;
+    gap: v.$spacing-md;
+    margin-bottom: v.$spacing-md;
+    
+    @media (max-width: v.$breakpoint-md) {
+      flex-direction: column;
+      gap: v.$spacing-sm;
+    }
+  }
+  
+  &__field {
+    flex: 1;
+  }
+  
+  &__label {
+    display: block;
+  }
+  
+  &__label-text {
+    margin-bottom: v.$spacing-xs;
+    font-size: v.$font-size-small;
+    color: v.$text-color;
+  }
+  
+  &__input,
+  &__select {
+    width: 100%;
+    padding: v.$spacing-sm;
+    border: 1px solid v.$gray;
+    border-radius: v.$border-radius;
+    background-color: lighten(v.$white, 5%);
+    color: v.$text-color;
+    font-size: v.$font-size-normal;
+    
+    &:focus {
+      outline: none;
+      border-color: v.$primary-color;
+      box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2);
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: v.$spacing-md;
+  }
+  
+  &__clear-button {
+    background-color: v.$danger-color;
+    color: v.$white;
+    border: none;
+    padding: v.$spacing-xs v.$spacing-sm;
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    font-size: v.$font-size-small;
+    transition: background-color v.$transition-speed;
+    
+    &:hover {
+      background-color: darken(v.$danger-color, 10%);
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

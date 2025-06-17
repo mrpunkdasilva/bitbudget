@@ -1,0 +1,432 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+@use 'sass:color';
+
+.export-area {
+  background-color: v.$white; // Já é escuro (v.$white: #1e1e1e)
+  box-shadow: v.$box-shadow;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md v.$spacing-lg;
+  margin-top: v.$spacing-md;
+  border: 2px solid v.$primary-color;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  // Adicionar um gradiente sutil no fundo
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, v.$primary-color, lighten(v.$primary-color, 20%), v.$primary-color);
+    z-index: 1;
+  }
+  
+  // Estilos para o estado retrátil
+  &--collapsed {
+    .export-area__content {
+      display: none;
+    }
+    
+    .export-area__header {
+      margin-bottom: 0;
+      cursor: pointer;
+      
+      &:hover {
+        background-color: rgba(v.$primary-color, 0.1);
+      }
+    }
+  }
+  
+  &--expanded {
+    .export-area__header {
+      cursor: pointer;
+      
+      &:hover {
+        background-color: rgba(v.$primary-color, 0.1);
+      }
+    }
+  }
+  
+  &__header {
+    margin-bottom: v.$spacing-md;
+    padding: v.$spacing-sm 0;
+    border-radius: v.$border-radius;
+    transition: background-color 0.2s ease;
+  }
+  
+  &__title {
+    margin: 0;
+    color: v.$primary-color; // Mantemos a cor roxa neon para o título
+    font-size: v.$font-size-xlarge;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    text-shadow: 0 0 5px rgba(v.$primary-color, 0.5); // Adicionar um brilho neon
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background-color: v.$primary-color;
+      border-radius: 1.5px;
+      box-shadow: 0 0 8px rgba(v.$primary-color, 0.8); // Adicionar um brilho neon
+    }
+  }
+  
+  &__toggle-icon {
+    margin-left: v.$spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+    
+    svg {
+      stroke: v.$primary-color;
+    }
+  }
+  
+  &__subtitle {
+    margin-top: v.$spacing-xs;
+    color: v.$text-color-light; // Texto secundário mais claro
+    font-size: v.$font-size-small;
+    font-style: italic;
+  }
+  
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacing-md;
+    
+    @include m.tablet {
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: space-between;
+    }
+  }
+  
+  &__format-selector {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacing-sm;
+    background-color: v.$light-gray; // Já é escuro (v.$light-gray: #2a2a2a)
+    padding: v.$spacing-md;
+    border-radius: v.$border-radius;
+    border: 1px solid v.$gray;
+    flex: 1;
+    
+    @include m.tablet {
+      max-width: 65%;
+    }
+  }
+  
+  &__radio-label {
+    display: flex;
+    align-items: center;
+    gap: v.$spacing-md;
+    cursor: pointer;
+    padding: v.$spacing-sm v.$spacing-md;
+    border-radius: v.$border-radius;
+    transition: all v.$transition-speed;
+    border: 2px solid transparent;
+    background-color: rgba(0, 0, 0, 0.3); // Fundo escuro para os itens
+    color: v.$text-color; // Texto claro
+    
+    &:hover {
+      background-color: rgba(v.$primary-color, 0.15);
+      transform: translateX(3px);
+    }
+    
+    &--active {
+      border-color: v.$primary-color;
+      background-color: rgba(v.$primary-color, 0.2);
+      box-shadow: 0 2px 8px rgba(v.$primary-color, 0.3);
+      
+      .export-area__format-icon {
+        color: v.$primary-color;
+        transform: scale(1.1);
+      }
+      
+      .export-area__radio-text {
+        color: v.$primary-color;
+        font-weight: bold;
+      }
+    }
+  }
+  
+  &__radio {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  
+  &__format-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(v.$primary-color, 0.2); // Fundo mais escuro
+    color: v.$text-color;
+    transition: all v.$transition-speed;
+    flex-shrink: 0;
+    box-shadow: 0 0 10px rgba(v.$primary-color, 0.3); // Adicionar um brilho neon
+    
+    &--csv {
+      color: #00ff9d; // Verde neon (v.$success-color)
+      background-color: rgba(0, 255, 157, 0.15); // Fundo verde escuro
+      box-shadow: 0 0 10px rgba(0, 255, 157, 0.3); // Brilho verde
+    }
+    
+    &--json {
+      color: #ffcc00; // Amarelo neon
+      background-color: rgba(255, 204, 0, 0.15); // Fundo amarelo escuro
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.3); // Brilho amarelo
+    }
+    
+    &--pdf {
+      color: #ff3864; // Vermelho neon (v.$danger-color)
+      background-color: rgba(255, 56, 100, 0.15); // Fundo vermelho escuro
+      box-shadow: 0 0 10px rgba(255, 56, 100, 0.3); // Brilho vermelho
+    }
+  }
+  
+  &__format-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  
+  &__radio-text {
+    font-size: v.$font-size-normal;
+    font-weight: 500;
+    transition: color v.$transition-speed;
+    color: v.$text-color; // Garantir que o texto seja claro
+  }
+  
+  &__format-desc {
+    font-size: v.$font-size-small;
+    color: v.$text-color-light; // Texto secundário mais claro
+  }
+  
+  &__button {
+    background-color: v.$primary-color;
+    color: #ffffff;
+    border: none;
+    border-radius: v.$border-radius;
+    padding: v.$spacing-md;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all v.$transition-speed;
+    margin-top: v.$spacing-sm;
+    box-shadow: 0 4px 0 darken(v.$primary-color, 10%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: v.$spacing-sm;
+    min-height: 60px;
+    
+    @include m.tablet {
+      margin-top: 0;
+      margin-left: auto;
+      min-width: 200px;
+      align-self: center;
+    }
+    
+    &:hover {
+      background-color: lighten(v.$primary-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 darken(v.$primary-color, 10%);
+    }
+    
+    &:active {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 darken(v.$primary-color, 10%);
+    }
+    
+    &:disabled {
+      background-color: v.$gray;
+      cursor: not-allowed;
+      box-shadow: 0 4px 0 darken(v.$gray, 10%);
+      
+      &:hover {
+        transform: none;
+        box-shadow: 0 4px 0 darken(v.$gray, 10%);
+      }
+    }
+    
+    &--loading {
+      opacity: 0.9;
+      cursor: wait;
+      
+      .export-area__button-icon {
+        animation: spin 1.5s infinite linear;
+      }
+    }
+    
+    &-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    &-text {
+      font-size: v.$font-size-medium;
+      letter-spacing: 0.5px;
+    }
+  }
+  
+  // Estilos para a prévia do PDF
+  &__preview {
+    margin-top: v.$spacing-lg;
+    border: 2px solid v.$primary-color;
+    border-radius: v.$border-radius;
+    background-color: darken(v.$white, 5%); // Fundo ainda mais escuro
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    
+    &-header {
+      background-color: v.$primary-color;
+      padding: v.$spacing-sm v.$spacing-md;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #ffffff;
+    }
+    
+    &-title {
+      margin: 0;
+      font-size: v.$font-size-medium;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    
+    &-close {
+      background: none;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      padding: v.$spacing-xs;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all v.$transition-speed;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: rotate(90deg);
+      }
+    }
+    
+    &-content {
+      height: 500px;
+      overflow: hidden;
+      background-color: v.$light-gray; // Já é escuro (v.$light-gray: #2a2a2a)
+      position: relative;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: repeating-linear-gradient(
+          45deg,
+          rgba(v.$primary-color, 0.05),
+          rgba(v.$primary-color, 0.05) 10px,
+          rgba(v.$primary-color, 0.02) 10px,
+          rgba(v.$primary-color, 0.02) 20px
+        );
+        z-index: 0;
+        pointer-events: none;
+      }
+      
+      @include m.mobile {
+        height: 400px;
+      }
+    }
+    
+    &-iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #ffffff; // Mantemos o iframe com fundo branco para o PDF
+      z-index: 1;
+      position: relative;
+    }
+    
+    &-footer {
+      padding: v.$spacing-sm v.$spacing-md;
+      display: flex;
+      justify-content: flex-end;
+      background-color: v.$light-gray; // Já é escuro (v.$light-gray: #2a2a2a)
+      border-top: 1px solid v.$gray;
+    }
+    
+    &-button {
+      background-color: v.$primary-color;
+      color: #ffffff;
+      border: none;
+      border-radius: v.$border-radius;
+      padding: v.$spacing-sm v.$spacing-md;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: v.$spacing-sm;
+      transition: all v.$transition-speed;
+      box-shadow: 0 2px 0 darken(v.$primary-color, 10%);
+      
+      &:hover {
+        background-color: lighten(v.$primary-color, 5%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 0 darken(v.$primary-color, 10%);
+      }
+      
+      &:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 0 darken(v.$primary-color, 10%);
+      }
+      
+      &:disabled {
+        background-color: v.$gray;
+        cursor: not-allowed;
+      }
+    }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

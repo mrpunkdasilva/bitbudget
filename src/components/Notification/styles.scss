@@ -1,0 +1,212 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+@use "sass:color";
+
+.notification-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  pointer-events: none;
+  width: 400px;
+  max-width: 90vw;
+  
+  & > * {
+    pointer-events: auto;
+  }
+}
+
+.notification {
+  position: fixed;
+  right: 20px;
+  width: 400px;
+  max-width: 90vw;
+  padding: 15px;
+  border-radius: v.$border-radius;
+  background-color: #1e1e1e; // Usar valor fixo para garantir consistência
+  color: #e0e0e0; // Garantir texto claro para tema escuro
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: flex-start;
+  z-index: 1000;
+  border: 3px solid;
+  transform: translateX(120%);
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(5px);
+  
+  &--visible {
+    transform: translateX(0);
+    animation: bounce 0.5s;
+  }
+  
+  &--hidden {
+    transform: translateX(120%);
+  }
+  
+  &--success {
+    border-color: v.$success-color;
+    
+    .notification__icon {
+      background-color: v.$success-color;
+    }
+    
+    .notification__progress-bar {
+      background-color: v.$success-color;
+    }
+  }
+  
+  &--error {
+    border-color: v.$danger-color;
+    
+    .notification__icon {
+      background-color: v.$danger-color;
+    }
+    
+    .notification__progress-bar {
+      background-color: v.$danger-color;
+    }
+  }
+  
+  &--info {
+    border-color: v.$primary-color;
+    
+    .notification__icon {
+      background-color: v.$primary-color;
+    }
+    
+    .notification__progress-bar {
+      background-color: v.$primary-color;
+    }
+  }
+  
+  &__icon {
+    width: 30px;
+    height: 30px;
+    border-radius: v.$border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-weight: bold;
+    margin-right: 15px;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  
+  &__content {
+    flex: 1;
+  }
+  
+  &__message {
+    margin-bottom: 10px;
+    color: #e0e0e0; // Garantir texto claro para tema escuro
+    font-size: v.$font-size-normal;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+  
+  &__progress {
+    height: 4px;
+    background-color: rgba(v.$gray, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  
+  &__progress-bar {
+    height: 100%;
+    width: 100%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+  }
+  
+  &__close {
+    background-color: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff; // Garantir texto claro para tema escuro
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    line-height: 1;
+    width: 30px;
+    height: 30px;
+    min-width: 30px; // Garantir largura mínima
+    min-height: 30px; // Garantir altura mínima
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+    position: relative;
+    z-index: 10;
+    animation: pulse-border 2s infinite;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      transform: scale(1.1);
+      animation: none;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+    }
+    
+    &:active {
+      transform: scale(0.9);
+    }
+    
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
+    }
+  }
+  
+  @keyframes pulse-border {
+    0% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
+    }
+    70% {
+      box-shadow: 0 0 0 5px rgba(255, 255, 255, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+  }
+  
+  // Animações
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(0);
+    }
+    40% {
+      transform: translateX(-10px);
+    }
+    60% {
+      transform: translateX(-5px);
+    }
+  }
+  
+  @keyframes slideIn {
+    from {
+      transform: translateX(120%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(120%);
+    }
+  }
+  
+  @media (max-width: v.$breakpoint-sm) {
+    right: 10px;
+    width: calc(100% - 20px);
+  }
+}

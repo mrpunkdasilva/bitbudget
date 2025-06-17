@@ -1,0 +1,115 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.chart-area {
+  @include m.card-style;
+  margin-bottom: v.$spacing-md;
+  border: 3px solid v.$gray;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, v.$secondary-color, v.$primary-color);
+    opacity: 0.7;
+  }
+  
+  // Pixel corners for 8-bit feel
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: v.$primary-color;
+    border-radius: 0;
+  }
+  
+  &__title {
+    font-size: v.$font-size-large;
+    font-weight: bold;
+    color: v.$secondary-color;
+    text-align: center;
+    margin-bottom: v.$spacing-md;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+    padding-bottom: v.$spacing-sm;
+    border-bottom: 2px dashed v.$gray;
+    position: relative;
+    
+    &::before, &::after {
+      content: '📊';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+    }
+    
+    &::before {
+      left: 20px;
+    }
+    
+    &::after {
+      right: 20px;
+    }
+  }
+  
+  &__container {
+    display: flex;
+    gap: v.$spacing-md;
+    
+    @include m.mobile {
+      flex-direction: column;
+    }
+  }
+  
+  &__chart {
+    flex: 1;
+    min-height: 350px;
+    padding: v.$spacing-md;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: v.$border-radius;
+    border: 3px solid v.$light-gray;
+    position: relative;
+    overflow: hidden;
+    
+    // Grid background for 8-bit feel
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(to right, rgba(v.$primary-color, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(v.$primary-color, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    canvas {
+      position: relative;
+      z-index: 1;
+    }
+    
+    // Pixel corners
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 6px;
+      background-color: v.$primary-color;
+      border-radius: 0;
+    }
+  }
+}

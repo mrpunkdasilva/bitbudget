@@ -1,0 +1,327 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+@use "sass:color";
+
+.input-area {
+  @include m.card-style;
+  margin-top: 35px; // Aumentado para dar espaço ao rótulo
+  margin-bottom: v.$spacing-lg;
+  display: flex;
+  align-items: flex-end;
+  border: 3px solid v.$primary-color;
+  position: relative;
+  overflow: visible; /* Garantir que o rótulo não seja cortado */
+  background-color: darken(v.$white, 3%);
+  padding: v.$spacing-lg v.$spacing-md;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, v.$primary-color, v.$secondary-color, v.$primary-color);
+    z-index: 1;
+  }
+  
+  &::after {
+    content: 'Nova Transação';
+    position: absolute;
+    top: -18px; /* Aumentado para ficar mais acima */
+    left: 20px;
+    background-color: v.$primary-color;
+    color: #ffffff;
+    padding: 10px 25px; /* Aumentado para dar mais espaço */
+    font-size: 15px; /* Aumentado para melhor legibilidade */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: v.$border-radius;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    z-index: 5; /* Aumentado para garantir que fique acima de outros elementos */
+    height: auto;
+    min-height: 24px; /* Aumentado para dar mais espaço */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Garantir que o texto fique centralizado verticalmente */
+    overflow: visible; /* Garantir que o texto não seja cortado */
+  }
+  
+  @include m.mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  &__label {
+    flex: 1;
+    margin: v.$spacing-sm;
+    position: relative;
+    
+    @include m.mobile {
+      width: 100%;
+    }
+  }
+
+  &__title {
+    font-weight: bold;
+    margin-bottom: v.$spacing-xs;
+    color: v.$primary-color;
+    text-transform: uppercase;
+    font-size: v.$font-size-small;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: v.$primary-color;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+  }
+  
+  // Remover o bullet point do botão Adicionar
+  .input-area__label:last-child .input-area__title::before {
+    display: none;
+  }
+
+  &__input {
+    width: 100%;
+    height: 45px;
+    padding: 0 v.$spacing-md;
+    border: 2px solid v.$gray;
+    border-radius: v.$border-radius;
+    font-size: v.$font-size-medium;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: darken(v.$white, 5%);
+    color: v.$text-color;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      border-color: rgba(v.$primary-color, 0.5);
+    }
+    
+    &:focus {
+      border-color: v.$primary-color;
+      box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      background-color: v.$white;
+    }
+    
+    &--error {
+      border-color: v.$danger-color;
+      background-color: rgba(v.$danger-color, 0.05);
+      
+      &:focus {
+        border-color: v.$danger-color;
+        box-shadow: 0 0 0 3px rgba(v.$danger-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+    }
+    
+    &[type="date"] {
+      padding-right: v.$spacing-sm;
+    }
+    
+    &[type="number"] {
+      text-align: right;
+      padding-right: v.$spacing-md;
+      
+      &::before {
+        content: 'R$';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: rgba(v.$text-color, 0.7);
+      }
+    }
+  }
+  
+  &__error {
+    color: v.$danger-color;
+    font-size: v.$font-size-small;
+    margin-top: 5px;
+    font-weight: bold;
+    animation: shake 0.5s ease-in-out;
+    position: absolute;
+    background-color: rgba(v.$danger-color, 0.1);
+    padding: 2px 8px;
+    border-radius: v.$border-radius;
+    border-left: 3px solid v.$danger-color;
+  }
+
+  &__select {
+    width: 100%;
+    height: 45px;
+    padding: 0 v.$spacing-md;
+    border: 2px solid v.$gray;
+    border-radius: v.$border-radius;
+    font-size: v.$font-size-medium;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: darken(v.$white, 5%);
+    color: v.$text-color;
+    cursor: pointer;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238a2be2' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+    
+    &:hover {
+      border-color: rgba(v.$primary-color, 0.5);
+    }
+    
+    &:focus {
+      border-color: v.$primary-color;
+      box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      background-color: v.$white;
+    }
+    
+    &--error {
+      border-color: v.$danger-color;
+      background-color: rgba(v.$danger-color, 0.05);
+      
+      &:focus {
+        border-color: v.$danger-color;
+        box-shadow: 0 0 0 3px rgba(v.$danger-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+    }
+    
+    option {
+      background-color: v.$white;
+      color: v.$text-color;
+      padding: 10px;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    height: 45px;
+    padding: 0 v.$spacing-md;
+    border: none;
+    border-radius: v.$border-radius;
+    background-color: v.$primary-color;
+    color: #ffffff;
+    font-size: v.$font-size-medium;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    box-shadow: 0 4px 0 darken(v.$primary-color, 15%);
+    overflow: hidden;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.3),
+        rgba(255, 255, 255, 0)
+      );
+      transform: rotate(30deg);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    &:hover {
+      background-color: lighten(v.$primary-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 darken(v.$primary-color, 15%);
+      
+      &::before {
+        opacity: 1;
+        animation: shine 1.5s infinite;
+      }
+    }
+    
+    &:active {
+      background-color: darken(v.$primary-color, 5%);
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 darken(v.$primary-color, 15%);
+    }
+    
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background-color: v.$gray;
+      box-shadow: 0 4px 0 darken(v.$gray, 15%);
+      
+      &:hover {
+        transform: none;
+        box-shadow: 0 4px 0 darken(v.$gray, 15%);
+      }
+    }
+    
+    &--loading {
+      position: relative;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        animation: loading 1.5s infinite;
+      }
+    }
+  }
+  
+  @keyframes shine {
+    0% {
+      left: -100%;
+      opacity: 0;
+    }
+    20% {
+      left: 100%;
+      opacity: 0.6;
+    }
+    100% {
+      left: 100%;
+      opacity: 0;
+    }
+  }
+  
+  @keyframes loading {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+      transform: translateX(5px);
+    }
+  }
+}

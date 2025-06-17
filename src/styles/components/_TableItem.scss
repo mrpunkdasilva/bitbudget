@@ -1,0 +1,159 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+@use 'sass:color';
+
+.table-item {
+  &__row {
+    &:hover {
+      background-color: rgba(v.$primary-color, 0.05);
+    }
+  }
+  
+  &__column {
+    padding: v.$spacing-sm;
+    
+    &--actions {
+      width: 100px;
+      text-align: center;
+    }
+  }
+  
+  &__category {
+    display: inline-block;
+    padding: v.$spacing-xs v.$spacing-sm;
+    border-radius: v.$border-radius;
+    color: #ffffff; // Sempre branco para garantir contraste
+    font-size: v.$font-size-small;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    
+    // Categorias de despesas
+    &--food {
+      background-color: v.$food-color;
+    }
+    
+    &--rent {
+      background-color: v.$rent-color;
+    }
+    
+    &--transport {
+      background-color: v.$transport-color;
+    }
+    
+    &--health {
+      background-color: v.$health-color;
+    }
+    
+    &--education {
+      background-color: v.$education-color;
+    }
+    
+    &--entertainment {
+      background-color: v.$leisure-color;
+    }
+    
+    &--leisure {
+      background-color: v.$leisure-color;
+    }
+    
+    &--utilities {
+      background-color: v.$secondary-color;
+    }
+    
+    &--other {
+      background-color: v.$other-color;
+    }
+    
+    &--gift {
+      background-color: #FF9800;
+    }
+    
+    // Categorias de receitas
+    &--salary {
+      background-color: v.$salary-color;
+    }
+    
+    &--investment {
+      background-color: v.$investment-color;
+    }
+    
+    &--freelance {
+      background-color: v.$freelance-color;
+    }
+  }
+  
+  &__value {
+    font-weight: bold;
+    
+    &--income {
+      color: v.$income-color;
+    }
+    
+    &--expense {
+      color: v.$expense-color;
+    }
+  }
+  
+  &__delete-btn {
+    background-color: transparent;
+    border: none;
+    color: v.$danger-color;
+    font-size: v.$font-size-large;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity v.$transition-speed;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    &:hover {
+      opacity: 1;
+      background-color: rgba(v.$danger-color, 0.1);
+    }
+  }
+  
+  &__delete-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  
+  &__confirm {
+    display: flex;
+    gap: 5px;
+  }
+  
+  &__confirm-btn {
+    border: none;
+    padding: 2px 5px;
+    border-radius: v.$border-radius;
+    font-size: v.$font-size-small;
+    cursor: pointer;
+    transition: background-color v.$transition-speed;
+    
+    &--yes {
+      background-color: v.$danger-color;
+      color: v.$white;
+      
+      &:hover {
+        background-color: color.adjust(v.$danger-color, $lightness: -10%);
+      }
+    }
+    
+    &--no {
+      background-color: v.$gray;
+      color: v.$text-color;
+      
+      &:hover {
+        background-color: color.adjust(v.$gray, $lightness: -10%);
+      }
+    }
+    
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}

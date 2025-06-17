@@ -1,4 +1,3 @@
-import * as C from './styles';
 import { formatCurrentMonth } from '../../helpers/dateFilter';
 import { ResumeItem } from '../ResumeItem';
 
@@ -13,44 +12,44 @@ export const InfoArea = ({ currentMonth, onMonthChange, income, expense }: Props
     const handlePrevMonth = () => {
         let [year, month] = currentMonth.split('-');
         let currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-        currentDate.setMonth( currentDate.getMonth() - 1 );
+        currentDate.setMonth(currentDate.getMonth() - 1);
         onMonthChange(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}`);
     }
 
     const handleNextMonth = () => {
         let [year, month] = currentMonth.split('-');
         let currentDate = new Date(parseInt(year), parseInt(month) - 1, 1);
-        currentDate.setMonth( currentDate.getMonth() + 1 );
+        currentDate.setMonth(currentDate.getMonth() + 1);
         onMonthChange(`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}`);
     }
 
     return (
-        <C.Container>
-            <C.MonthArea>
-                <C.MonthArrow onClick={handlePrevMonth}>⬅️</C.MonthArrow>
-                <C.MonthTitle>
+        <div className="info-area">
+            <div className="info-area__month">
+                <div className="info-area__month-arrow" onClick={handlePrevMonth}>⬅️</div>
+                <div className="info-area__month-title">
                     {formatCurrentMonth(currentMonth)}
-                </C.MonthTitle>
-                <C.MonthArrow onClick={handleNextMonth}>➡️</C.MonthArrow>
-            </C.MonthArea>
+                </div>
+                <div className="info-area__month-arrow" onClick={handleNextMonth}>➡️</div>
+            </div>
 
-            <C.ResumeArea>
+            <div className="info-area__resume">
                 <ResumeItem 
                     title="Receitas" 
                     value={income} 
-                    
+                    type="income"
                 />               
                 <ResumeItem  
-                    title="Despeças" 
+                    title="Despesas" 
                     value={expense} 
-                    
+                    type="expense"
                 />
                 <ResumeItem 
                     title="Balanço" 
                     value={income - expense} 
-                    color={(income - expense) < 0 ? 'red' : 'green'}
+                    type={income - expense < 0 ? 'expense' : 'income'}
                 />
-            </C.ResumeArea>
-        </C.Container>
+            </div>
+        </div>
     );
 }

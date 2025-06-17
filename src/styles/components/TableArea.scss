@@ -1,0 +1,49 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.table {
+  width: 100%;
+  background-color: v.$white;
+  padding: v.$spacing-md;
+  @include m.box-shadow;
+  border-radius: v.$border-radius-lg;
+  margin-top: v.$spacing-md;
+  border-collapse: collapse;
+  border: 3px solid v.$gray;
+  position: relative;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, v.$primary-color, v.$secondary-color);
+    opacity: 0.7;
+  }
+  
+  @include m.mobile {
+    display: block;
+    overflow-x: auto;
+  }
+
+  &__head-column {
+    padding: v.$spacing-sm 0;
+    text-align: left;
+    border-bottom: 2px solid v.$gray;
+    color: v.$secondary-color;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: v.$font-size-small;
+    
+    &:first-child {
+      padding-left: v.$spacing-sm;
+    }
+    
+    &:last-child {
+      padding-right: v.$spacing-sm;
+    }
+  }
+}

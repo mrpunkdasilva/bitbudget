@@ -1,0 +1,141 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+@use 'global';
+
+// Components
+@use 'components/InfoArea';
+@use 'components/ResumeItem';
+@use 'components/InputArea';
+@use 'components/ChartArea';
+@use 'components/TableArea';
+@use 'components/_TableItem' as TableItem;
+@use 'components/_FilterArea' as FilterArea;
+@use 'components/_ExportArea' as ExportArea;
+
+// Importar estilos de componentes individuais
+@import '../components/Notification/styles.scss';
+
+// Estilos para os novos componentes
+.section-title {
+  color: v.$primary-color;
+  font-size: v.$font-size-xlarge;
+  margin: v.$spacing-lg 0 v.$spacing-md;
+  position: relative;
+  display: inline-block;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: v.$primary-color;
+    border-radius: 1.5px;
+  }
+}
+
+// Estilos para a seção Web3
+.web3-section {
+  background-color: v.$white;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md;
+  margin-top: v.$spacing-md;
+  box-shadow: v.$box-shadow;
+  border: 2px solid #00a3ff; // Cor azul para Web3
+}
+
+.web3-container {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+  
+  @include m.tablet {
+    flex-direction: row;
+  }
+}
+
+.wallet-connect, .assets-list {
+  background-color: v.$light-gray;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md;
+  flex: 1;
+}
+
+// Estilos para a seção AI
+.ai-section {
+  background-color: v.$white;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md;
+  margin-top: v.$spacing-md;
+  box-shadow: v.$box-shadow;
+  border: 2px solid #00cc88; // Cor verde para AI
+}
+
+.ai-advisor-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #00cc88;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 204, 136, 0.5);
+  border: none;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
+  
+  .unread-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: v.$danger-color;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+  }
+}
+
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$spacing-md;
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: v.$spacing-md;
+}
+
+.recommendation-card {
+  background-color: v.$light-gray;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-md;
+  border-left: 4px solid #00cc88;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &.unread {
+    border-left-color: v.$primary-color;
+  }
+}

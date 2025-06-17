@@ -1,0 +1,334 @@
+@use 'variables' as v;
+@use 'mixins' as m;
+@use "sass:color";
+
+// Importando a fonte Pixel
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: v.$font-family;
+  background-color: v.$background-color;
+  color: v.$text-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: 
+    linear-gradient(to right, rgba(v.$primary-color, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(v.$primary-color, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  position: relative;
+  overflow-x: hidden;
+  line-height: 1.5;
+  font-size: 16px;
+  
+  // Melhorias de acessibilidade
+  &:focus {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+  
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+    pointer-events: none;
+    z-index: -1;
+  }
+  
+  &::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%239C92AC' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 5v1H5V0zm1 5v1H5v-1h1z'/%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0.5;
+  }
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  
+  &:focus {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  
+  &:focus {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+  
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+  
+  &:focus-visible {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+}
+
+input, select {
+  font-family: inherit;
+  
+  &:focus {
+    outline: 2px solid v.$primary-color;
+    outline-offset: 2px;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: v.$background-color;
+}
+
+::-webkit-scrollbar-thumb {
+  background: v.$primary-color;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: color.adjust(v.$primary-color, $lightness: 10%);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  background-color: v.$primary-color;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 10;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, v.$secondary-color, v.$primary-color, v.$secondary-color);
+    z-index: 1;
+    animation: shimmer 2s infinite linear;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: repeating-linear-gradient(
+      to right,
+      v.$secondary-color,
+      v.$secondary-color 20px,
+      transparent 20px,
+      transparent 40px
+    );
+    opacity: 0.3;
+    animation: slide 20s infinite linear;
+  }
+  
+  &__logo {
+    margin-bottom: v.$spacing-sm;
+    position: relative;
+    
+    &-img {
+      width: 64px;
+      height: 64px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+      animation: float 3s ease-in-out infinite;
+      transform-origin: center;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 4px;
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 50%;
+      filter: blur(3px);
+      animation: shadow 3s ease-in-out infinite;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    color: #ffffff;
+    font-size: 32px;
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
+    
+    @include m.mobile {
+      font-size: 24px;
+    }
+  }
+  
+  &__subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: v.$font-size-small;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: v.$spacing-xs;
+    position: relative;
+    padding: v.$spacing-xs v.$spacing-md;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: v.$border-radius;
+    animation: pulse 4s infinite;
+    
+    @include m.mobile {
+      font-size: 10px;
+      margin-top: 5px;
+    }
+  }
+}
+
+// Animações
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shadow {
+  0%, 100% {
+    opacity: 0.3;
+    width: 40px;
+  }
+  50% {
+    opacity: 0.2;
+    width: 30px;
+  }
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+  }
+  to {
+    text-shadow: 3px 3px 15px rgba(v.$secondary-color, 0.7);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes slide {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 1000px 0;
+  }
+}
+
+.body {
+  margin: auto;
+  width: 80%;
+  max-width: 1400px;
+  min-height: 600px;
+  margin-bottom: v.$spacing-xl;
+  padding: 0 v.$spacing-sm;
+  padding-top: 20px;
+  position: relative;
+  z-index: 1;
+  
+  @media (max-width: 768px) {
+    width: 95%;
+    padding: 0 v.$spacing-xs;
+  }
+  
+  @media (min-width: 1800px) {
+    max-width: 1600px;
+  }
+  
+  // Melhorias de acessibilidade
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  
+  @media screen and (prefers-contrast: high) {
+    * {
+      background-color: white !important;
+      color: black !important;
+      border-color: black !important;
+    }
+  }
+}

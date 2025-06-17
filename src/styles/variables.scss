@@ -1,0 +1,60 @@
+// Cores - Tema Dark Pixel Art
+$primary-color: #8a2be2; // Roxo neon
+$secondary-color: #00b4d8; // Azul ciano
+$background-color: #121212; // Fundo escuro
+$text-color: #e0e0e0; // Texto claro
+$text-color-light: #a0a0a0; // Texto claro secundário
+$success-color: #00ff9d; // Verde neon
+$danger-color: #ff3864; // Vermelho neon
+$white: #1e1e1e; // Card background
+$light-gray: #2a2a2a; // Cinza claro para hover
+$gray: #3a3a3a; // Cinza para bordas
+
+// Cores para categorias de despesas
+$food-color: #ff9f1c; // Laranja
+$rent-color: #2ec4b6; // Turquesa
+$transport-color: #e71d36; // Vermelho
+$health-color: #ff5400; // Laranja escuro
+$education-color: #3a86ff; // Azul
+$leisure-color: #b15eff; // Roxo mais claro
+$other-color: #adb5bd; // Cinza médio
+
+// Cores para categorias de receitas
+$salary-color: #38b000; // Verde
+$investment-color: #9d4edd; // Roxo claro
+$freelance-color: #fb8500; // Laranja
+
+// Cores para valores
+$income-color: $success-color; // Verde neon
+$expense-color: $danger-color; // Vermelho neon
+
+// Fontes
+$font-family: 'Press Start 2P', 'Courier New', monospace; // Fonte estilo pixel
+$font-size-small: 12px;
+$font-size-normal: 14px;
+$font-size-medium: 14px;
+$font-size-large: 16px;
+$font-size-xlarge: 20px;
+
+// Espaçamento
+$spacing-xs: 5px;
+$spacing-sm: 10px;
+$spacing-md: 20px;
+$spacing-lg: 30px;
+$spacing-xl: 40px;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// Bordas
+$border-radius: 0px; // Sem arredondamento para estilo pixel
+$border-radius-lg: 0px;
+
+// Sombras
+$box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+
+// Transições
+$transition-speed: 0.2s;

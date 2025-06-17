@@ -1,0 +1,75 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.resume-item {
+  flex: 1;
+  margin: 0 v.$spacing-sm;
+  padding: v.$spacing-sm;
+  border: 2px solid v.$gray;
+  border-radius: v.$border-radius;
+  background-color: rgba(v.$light-gray, 0.2);
+  @include m.transition(transform);
+  
+  &:hover {
+    transform: translateY(-3px);
+  }
+  
+  @include m.mobile {
+    margin-bottom: v.$spacing-sm;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    text-align: center;
+    font-weight: bold;
+    color: v.$secondary-color;
+    margin-bottom: v.$spacing-xs;
+    font-size: v.$font-size-small;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding-bottom: v.$spacing-xs;
+    border-bottom: 2px dashed rgba(v.$gray, 0.5);
+  }
+
+  &__info {
+    text-align: center;
+    font-weight: bold;
+    font-size: v.$font-size-large;
+    padding: v.$spacing-xs;
+    margin-top: v.$spacing-xs;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+
+    &--income {
+      color: v.$success-color;
+      position: relative;
+      
+      &::after {
+        content: '↑';
+        position: absolute;
+        font-size: 14px;
+        margin-left: 5px;
+        top: 0;
+      }
+    }
+
+    &--expense {
+      color: v.$danger-color;
+      position: relative;
+      
+      &::after {
+        content: '↓';
+        position: absolute;
+        font-size: 14px;
+        margin-left: 5px;
+        top: 0;
+      }
+    }
+
+    &--balance {
+      color: v.$text-color;
+    }
+  }
+}

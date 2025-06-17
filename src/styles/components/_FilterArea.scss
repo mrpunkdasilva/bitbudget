@@ -1,0 +1,293 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+@use 'sass:color';
+
+.filter-area {
+  background-color: v.$white;
+  border-radius: v.$border-radius;
+  padding: v.$spacing-lg v.$spacing-md;
+  margin-top: 35px; // Aumentado para dar espaço ao rótulo
+  margin-bottom: v.$spacing-lg;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border: 3px solid v.$secondary-color;
+  position: relative;
+  overflow: visible; /* Alterado para garantir que o rótulo não seja cortado */
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, v.$secondary-color, v.$primary-color, v.$secondary-color);
+    z-index: 1;
+  }
+  
+  &::after {
+    content: 'Filtros';
+    position: absolute;
+    top: -18px; /* Aumentado para ficar mais acima */
+    right: 20px;
+    background-color: v.$secondary-color;
+    color: #ffffff;
+    padding: 10px 25px; /* Aumentado para dar mais espaço */
+    font-size: 15px; /* Aumentado para melhor legibilidade */
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: v.$border-radius;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+    white-space: nowrap;
+    z-index: 5; /* Aumentado para garantir que fique acima de outros elementos */
+    height: auto;
+    min-height: 24px; /* Aumentado para dar mais espaço */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1; /* Garantir que o texto fique centralizado verticalmente */
+    overflow: visible; /* Garantir que o texto não seja cortado */
+  }
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: v.$spacing-md;
+    border-bottom: 2px solid rgba(v.$secondary-color, 0.3);
+    padding-bottom: v.$spacing-sm;
+  }
+  
+  &__title {
+    font-size: v.$font-size-large;
+    font-weight: bold;
+    color: v.$secondary-color;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    padding-left: v.$spacing-sm;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: v.$secondary-color;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+  }
+  
+  &__toggle-button {
+    background-color: v.$secondary-color;
+    color: #ffffff;
+    border: none;
+    padding: v.$spacing-xs v.$spacing-md;
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    font-size: v.$font-size-small;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 0 darken(v.$secondary-color, 15%);
+    position: relative;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: all 0.5s;
+    }
+    
+    &:hover {
+      background-color: lighten(v.$secondary-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 darken(v.$secondary-color, 15%);
+      
+      &::after {
+        left: 100%;
+      }
+    }
+    
+    &:active {
+      background-color: darken(v.$secondary-color, 5%);
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 darken(v.$secondary-color, 15%);
+    }
+  }
+  
+  &__content {
+    animation: slideDown 0.3s ease;
+    background-color: rgba(v.$secondary-color, 0.05);
+    border-radius: v.$border-radius;
+    padding: v.$spacing-md;
+    border: 2px solid rgba(v.$secondary-color, 0.2);
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  &__row {
+    display: flex;
+    gap: v.$spacing-md;
+    margin-bottom: v.$spacing-md;
+    
+    @media (max-width: v.$breakpoint-md) {
+      flex-direction: column;
+      gap: v.$spacing-sm;
+    }
+  }
+  
+  &__field {
+    flex: 1;
+    position: relative;
+  }
+  
+  &__label {
+    display: block;
+  }
+  
+  &__label-text {
+    margin-bottom: v.$spacing-xs;
+    font-size: v.$font-size-small;
+    color: v.$secondary-color;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background-color: v.$secondary-color;
+      margin-right: 6px;
+      border-radius: 50%;
+    }
+  }
+  
+  &__input,
+  &__select {
+    width: 100%;
+    height: 45px;
+    padding: 0 v.$spacing-md;
+    border: 2px solid v.$gray;
+    border-radius: v.$border-radius;
+    background-color: darken(v.$white, 5%);
+    color: v.$text-color;
+    font-size: v.$font-size-normal;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    
+    &:hover {
+      border-color: rgba(v.$secondary-color, 0.5);
+    }
+    
+    &:focus {
+      outline: none;
+      border-color: v.$secondary-color;
+      box-shadow: 0 0 0 3px rgba(v.$secondary-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      background-color: v.$white;
+    }
+    
+    &::placeholder {
+      color: rgba(v.$text-color, 0.5);
+    }
+  }
+  
+  &__select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2300b4d8' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    padding-right: 40px;
+    
+    option {
+      background-color: v.$white;
+      color: v.$text-color;
+      padding: 10px;
+    }
+  }
+  
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: v.$spacing-md;
+  }
+  
+  &__clear-button {
+    background-color: v.$danger-color;
+    color: #ffffff;
+    border: none;
+    padding: v.$spacing-xs v.$spacing-md;
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    font-size: v.$font-size-small;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 0 darken(v.$danger-color, 15%);
+    position: relative;
+    overflow: hidden;
+    
+    &:hover {
+      background-color: lighten(v.$danger-color, 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 darken(v.$danger-color, 15%);
+    }
+    
+    &:active {
+      background-color: darken(v.$danger-color, 5%);
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 darken(v.$danger-color, 15%);
+    }
+    
+    &::before {
+      content: '×';
+      margin-right: 5px;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: all 0.5s;
+    }
+    
+    &:hover::after {
+      left: 100%;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
