@@ -109,6 +109,139 @@
     gap: v.$spacing-md;
   }
   
+  // Classes para a versão simplificada do componente
+  &__options {
+    display: flex;
+    gap: v.$spacing-md;
+    flex-wrap: wrap;
+    margin-bottom: v.$spacing-md;
+    
+    @include m.mobile {
+      flex-direction: column;
+      gap: v.$spacing-sm;
+    }
+  }
+  
+  &__option-group {
+    display: flex;
+    flex-direction: column;
+    gap: v.$spacing-xs;
+    min-width: 200px;
+    flex: 1;
+    
+    @include m.mobile {
+      min-width: unset;
+      width: 100%;
+    }
+
+    label {
+      font-size: v.$font-size-medium;
+      font-weight: 600;
+      color: v.$primary-color;
+      margin-bottom: v.$spacing-xs;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select {
+      padding: v.$spacing-sm v.$spacing-md;
+      border: 2px solid rgba(v.$primary-color, 0.3);
+      border-radius: v.$border-radius;
+      font-size: v.$font-size-normal;
+      background-color: v.$light-gray;
+      color: v.$text-color;
+      transition: all v.$transition-speed;
+      cursor: pointer;
+      
+      &:focus {
+        outline: none;
+        border-color: v.$primary-color;
+        box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.2);
+        background-color: rgba(v.$primary-color, 0.05);
+      }
+
+      &:hover:not(:disabled) {
+        border-color: rgba(v.$primary-color, 0.6);
+        background-color: rgba(v.$primary-color, 0.05);
+      }
+
+      &:disabled {
+        background-color: v.$gray;
+        color: v.$text-color-light;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+      
+      option {
+        background-color: v.$light-gray;
+        color: v.$text-color;
+        padding: v.$spacing-xs;
+      }
+    }
+  }
+  
+  &__export-button {
+    background-color: v.$primary-color;
+    color: #ffffff;
+    border: none;
+    border-radius: v.$border-radius;
+    padding: v.$spacing-md v.$spacing-lg;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: v.$font-size-medium;
+    transition: all v.$transition-speed;
+    margin-top: v.$spacing-sm;
+    box-shadow: 0 4px 0 color.adjust(v.$primary-color, $lightness: -10%);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: v.$spacing-sm;
+    min-height: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
+    @include m.mobile {
+      width: 100%;
+      padding: v.$spacing-md;
+    }
+    
+    &:hover:not(:disabled) {
+      background-color: color.adjust(v.$primary-color, $lightness: 5%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 color.adjust(v.$primary-color, $lightness: -10%);
+    }
+    
+    &:active:not(:disabled) {
+      transform: translateY(2px);
+      box-shadow: 0 2px 0 color.adjust(v.$primary-color, $lightness: -10%);
+    }
+    
+    &:disabled {
+      background-color: v.$gray;
+      cursor: not-allowed;
+      box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -10%);
+      opacity: 0.7;
+      
+      &:hover {
+        transform: none;
+        box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -10%);
+      }
+    }
+  }
+  
+  &__no-data {
+    font-size: v.$font-size-normal;
+    color: v.$text-color-light;
+    font-style: italic;
+    margin: v.$spacing-md 0 0 0;
+    text-align: center;
+    padding: v.$spacing-md;
+    background-color: rgba(v.$primary-color, 0.05);
+    border: 1px dashed rgba(v.$primary-color, 0.3);
+    border-radius: v.$border-radius;
+  }
+  
   &__section-title {
     font-size: v.$font-size-medium;
     color: v.$text-color;
