@@ -1,0 +1,222 @@
+.financial-summary {
+  margin: 2rem 0;
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    
+    h3 {
+      color: var(--primary-color);
+      margin: 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+    }
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 1rem;
+      align-items: flex-start;
+      
+      h3 {
+        font-size: 1.5rem;
+      }
+    }
+  }
+  
+  &__subtitle {
+    margin-bottom: 1.5rem;
+    
+    p {
+      color: var(--text-muted);
+      margin: 0;
+      font-size: 0.9rem;
+    }
+  }
+  
+  &__loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 0;
+    
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      color: var(--text-muted);
+      margin: 0;
+    }
+  }
+  
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+.period-selector {
+  display: flex;
+  background: var(--card-bg);
+  border-radius: 8px;
+  padding: 0.25rem;
+  border: 1px solid var(--border-color);
+  
+  button {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(var(--primary-rgb), 0.1);
+      color: var(--primary-color);
+    }
+    
+    &.active {
+      background: var(--primary-color);
+      color: white;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    width: 100%;
+    
+    button {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.25rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  &__icon {
+    font-size: 1.2rem;
+  }
+  
+  &__label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  
+  &__value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+    
+    @media (max-width: 480px) {
+      font-size: 1.5rem;
+    }
+  }
+  
+  &__change {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    
+    &--positive {
+      color: #28a745;
+      
+      &::before {
+        content: '↗ ';
+      }
+    }
+    
+    &--negative {
+      color: #dc3545;
+      
+      &::before {
+        content: '↘ ';
+      }
+    }
+    
+    &--neutral {
+      color: var(--text-muted);
+      
+      &::before {
+        content: '→ ';
+      }
+    }
+  }
+  
+  &__trend {
+    height: 20px;
+    opacity: 0.6;
+    color: var(--primary-color);
+    
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// Dark mode adjustments
+[data-theme="dark"] {
+  .metric-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+  }
+  
+  .period-selector {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+}

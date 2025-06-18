@@ -12,6 +12,7 @@
 @use 'components/_TableItem' as TableItem;
 @use 'components/_FilterArea' as FilterArea;
 @use 'components/_ExportArea' as ExportArea;
+@use 'components/_Web3' as Web3;
 
 // Importar estilos de componentes individuais
 @use '../components/Notification/styles.scss' as Notification;

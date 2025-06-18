@@ -8,4 +8,7 @@ export type Web3Asset = {
   network: string;
   lastUpdated: string;
   userId: string;
+  price?: number;
+  change24h?: number;
+  valueUSD?: number;
 };

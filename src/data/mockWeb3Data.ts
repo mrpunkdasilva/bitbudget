@@ -1,0 +1,125 @@
+import { Web3Asset } from '../types/Web3Asset';
+
+// Mock data para demonstração
+export const mockWalletAddress = "0x742d35Cc6634C0532925a3b8D";
+
+export const mockWeb3Assets: Web3Asset[] = [
+  {
+    id: '1',
+    name: 'Bitcoin',
+    symbol: 'BTC',
+    balance: '0.245',
+    tokenType: 'NATIVE',
+    network: 'Bitcoin',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    price: 43250.00,
+    change24h: 2.45,
+    valueUSD: 10596.25
+  },
+  {
+    id: '2',
+    name: 'Ethereum',
+    symbol: 'ETH',
+    balance: '1.847',
+    tokenType: 'NATIVE',
+    network: 'Ethereum',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    price: 2650.00,
+    change24h: -1.23,
+    valueUSD: 4894.55
+  },
+  {
+    id: '3',
+    name: 'Binance Coin',
+    symbol: 'BNB',
+    balance: '5.234',
+    tokenType: 'NATIVE',
+    network: 'BSC',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    price: 315.50,
+    change24h: 3.78,
+    valueUSD: 1651.33
+  },
+  {
+    id: '4',
+    name: 'Cardano',
+    symbol: 'ADA',
+    balance: '850.00',
+    tokenType: 'NATIVE',
+    network: 'Cardano',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    price: 0.52,
+    change24h: 5.21,
+    valueUSD: 442.00
+  },
+  {
+    id: '5',
+    name: 'Solana',
+    symbol: 'SOL',
+    balance: '12.45',
+    tokenType: 'NATIVE',
+    network: 'Solana',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    price: 95.80,
+    change24h: -2.15,
+    valueUSD: 1192.71
+  },
+  {
+    id: '6',
+    name: 'Polygon',
+    symbol: 'MATIC',
+    balance: '234.67',
+    tokenType: 'ERC20',
+    network: 'Ethereum',
+    lastUpdated: new Date().toISOString(),
+    userId: 'user1',
+    tokenAddress: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
+    price: 0.87,
+    change24h: 1.45,
+    valueUSD: 204.16
+  }
+];
+
+export const mockCryptoPrices = [
+  {
+    symbol: 'BTC',
+    name: 'Bitcoin',
+    price: 43250.00,
+    change24h: 2.45,
+    icon: '₿'
+  },
+  {
+    symbol: 'ETH',
+    name: 'Ethereum',
+    price: 2650.00,
+    change24h: -1.23,
+    icon: 'Ξ'
+  },
+  {
+    symbol: 'BNB',
+    name: 'Binance Coin',
+    price: 315.50,
+    change24h: 3.78,
+    icon: '🔶'
+  },
+  {
+    symbol: 'ADA',
+    name: 'Cardano',
+    price: 0.52,
+    change24h: 5.21,
+    icon: '🔷'
+  }
+];
+
+export const mockPortfolioStats = {
+  totalValue: 18980.00,
+  change24h: 1.85,
+  topGainer: 'ADA',
+  topLoser: 'SOL',
+  assetsCount: 6
+};

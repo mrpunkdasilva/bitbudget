@@ -3,6 +3,7 @@ import { Web3Asset } from '../types/Web3Asset';
 import { web3API } from '../services/api';
 import { useAuth } from './AuthContext';
 import { useNotification } from '../components/NotificationManager';
+import { mockWalletAddress, mockWeb3Assets } from '../data/mockWeb3Data';
 
 interface Web3ContextData {
   walletAddress: string | null;
@@ -46,15 +47,14 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
   }, [token, user]);
 
   const connectWallet = async (address: string) => {
-    if (!token) {
-      error('Você precisa estar logado para conectar uma carteira');
-      return;
-    }
-    
     try {
       setIsConnecting(true);
-      const { walletAddress: connectedAddress } = await web3API.connectWallet(token, address);
-      setWalletAddress(connectedAddress);
+      
+      // Simular delay de API
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Usar dados mocados
+      setWalletAddress(mockWalletAddress);
       success('Carteira conectada com sucesso!');
       
       // Sync assets after connecting wallet
@@ -68,21 +68,20 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const syncAssets = async () => {
-    if (!token) {
-      error('Você precisa estar logado para sincronizar ativos');
-      return;
-    }
-    
-    if (!walletAddress) {
+    if (!walletAddress && !mockWalletAddress) {
       info('Conecte uma carteira primeiro para sincronizar ativos');
       return;
     }
     
     try {
       setIsSyncing(true);
-      const { assets: syncedAssets } = await web3API.syncAssets(token);
-      setAssets(syncedAssets);
-      success('Ativos sincronizados com sucesso!');
+      
+      // Simular delay de API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      // Usar dados mocados
+      setAssets(mockWeb3Assets);
+      success(`${mockWeb3Assets.length} ativos sincronizados com sucesso!`);
     } catch (err) {
       error('Falha ao sincronizar ativos. Tente novamente.');
       throw err;

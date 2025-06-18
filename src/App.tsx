@@ -14,8 +14,14 @@ import { FilterArea, FilterOptions } from './components/FilterArea';
 import { ExportArea } from './components/ExportArea';
 import { WalletConnect } from './components/Web3/WalletConnect';
 import { AssetsList } from './components/Web3/AssetsList';
+import { CryptoPriceCards } from './components/Web3/CryptoPriceCards';
+import { PortfolioStats } from './components/Web3/PortfolioStats';
 import { AiAdvisorButton } from './components/AiAdvisor/AiAdvisorButton';
 import { RecommendationsList } from './components/AiAdvisor/RecommendationsList';
+import { SmartInsights } from './components/SmartInsights';
+import { SmartAlerts } from './components/SmartAlerts';
+import { FinancialSummary } from './components/FinancialSummary';
+import { QuickTips } from './components/QuickTips';
 
 const App = () => {
   const [list, setList] = useState(items);
@@ -187,12 +193,24 @@ const App = () => {
         <div className="header__subtitle">Sistema Financeiro</div>
       </div>
       <div className="body">
+        {/* Alertas Inteligentes */}
+        <SmartAlerts />
+        
+        {/* Resumo Financeiro Inteligente */}
+        <FinancialSummary />
+        
         <InfoArea 
           currentMonth={currentMonth} 
           onMonthChange={handleMonthChange}
           income={income}
           expense={expense}
         />
+
+        {/* Insights Inteligentes */}
+        <SmartInsights />
+
+        {/* Dicas Rápidas */}
+        <QuickTips />
 
         <ChartArea 
           income={income}
@@ -234,8 +252,14 @@ const App = () => {
           
           {web3Expanded && (
             <div className="web3-container">
-              <WalletConnect />
-              <AssetsList />
+              <div className="web3-left-column">
+                <WalletConnect />
+                <PortfolioStats />
+              </div>
+              <div className="web3-right-column">
+                <CryptoPriceCards />
+                <AssetsList />
+              </div>
             </div>
           )}
         </div>
