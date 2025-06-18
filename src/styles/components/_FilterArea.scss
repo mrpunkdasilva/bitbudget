@@ -90,7 +90,7 @@
     font-size: v.$font-size-small;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 0 darken(v.$secondary-color, 15%);
+    box-shadow: 0 4px 0 color.adjust(v.$secondary-color, $lightness: -15%);
     position: relative;
     overflow: hidden;
     
@@ -111,9 +111,9 @@
     }
     
     &:hover {
-      background-color: lighten(v.$secondary-color, 5%);
+      background-color: color.adjust(v.$secondary-color, $lightness: 5%);
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 darken(v.$secondary-color, 15%);
+      box-shadow: 0 6px 0 color.adjust(v.$secondary-color, $lightness: -15%);
       
       &::after {
         left: 100%;
@@ -121,9 +121,9 @@
     }
     
     &:active {
-      background-color: darken(v.$secondary-color, 5%);
+      background-color: color.adjust(v.$secondary-color, $lightness: -5%);
       transform: translateY(2px);
-      box-shadow: 0 2px 0 darken(v.$secondary-color, 15%);
+      box-shadow: 0 2px 0 color.adjust(v.$secondary-color, $lightness: -15%);
     }
   }
   
@@ -184,7 +184,7 @@
     padding: 0 v.$spacing-md;
     border: 2px solid v.$gray;
     border-radius: v.$border-radius;
-    background-color: darken(v.$white, 5%);
+    background-color: color.adjust(v.$white, $lightness: -5%);
     color: v.$text-color;
     font-size: v.$font-size-normal;
     transition: all 0.3s ease;
@@ -236,20 +236,20 @@
     font-size: v.$font-size-small;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 0 darken(v.$danger-color, 15%);
+    box-shadow: 0 4px 0 color.adjust(v.$danger-color, $lightness: -15%);
     position: relative;
     overflow: hidden;
     
     &:hover {
-      background-color: lighten(v.$danger-color, 5%);
+      background-color: color.adjust(v.$danger-color, $lightness: 5%);
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 darken(v.$danger-color, 15%);
+      box-shadow: 0 6px 0 color.adjust(v.$danger-color, $lightness: -15%);
     }
     
     &:active {
-      background-color: darken(v.$danger-color, 5%);
+      background-color: color.adjust(v.$danger-color, $lightness: -5%);
       transform: translateY(2px);
-      box-shadow: 0 2px 0 darken(v.$danger-color, 15%);
+      box-shadow: 0 2px 0 color.adjust(v.$danger-color, $lightness: -15%);
     }
     
     &::before {

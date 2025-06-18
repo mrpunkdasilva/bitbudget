@@ -1,6 +1,7 @@
 @use 'variables' as v;
 @use 'mixins' as m;
 @use 'global';
+@use "sass:color";
 
 // Components
 @use 'components/InfoArea';
@@ -13,7 +14,7 @@
 @use 'components/_ExportArea' as ExportArea;
 
 // Importar estilos de componentes individuais
-@import '../components/Notification/styles.scss';
+@use '../components/Notification/styles.scss' as Notification;
 
 // Estilos para os novos componentes
 .section-title {
@@ -43,6 +44,60 @@
   margin-top: v.$spacing-md;
   box-shadow: v.$box-shadow;
   border: 2px solid #00a3ff; // Cor azul para Web3
+  position: relative;
+  overflow: visible;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00a3ff, color.adjust(#00a3ff, $lightness: 20%), #00a3ff);
+    z-index: 1;
+  }
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: v.$spacing-md;
+    padding-bottom: v.$spacing-sm;
+    border-bottom: 2px solid rgba(#00a3ff, 0.3);
+    cursor: pointer;
+    
+    &:hover {
+      background-color: rgba(#00a3ff, 0.1);
+    }
+  }
+  
+  &__title {
+    color: #00a3ff;
+    font-size: v.$font-size-xlarge;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: 0 0 5px rgba(#00a3ff, 0.5);
+  }
+  
+  &__toggle-icon {
+    margin-left: v.$spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  
+  &__subtitle {
+    margin-top: v.$spacing-xs;
+    color: v.$text-color-light;
+    font-size: v.$font-size-small;
+    font-style: italic;
+  }
 }
 
 .web3-container {
@@ -60,6 +115,81 @@
   border-radius: v.$border-radius;
   padding: v.$spacing-md;
   flex: 1;
+  border: 1px solid rgba(#00a3ff, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-color: rgba(#00a3ff, 0.6);
+  }
+  
+  &__title {
+    color: #00a3ff;
+    font-size: v.$font-size-large;
+    font-weight: bold;
+    margin-bottom: v.$spacing-sm;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #00a3ff;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+  }
+}
+
+.crypto-asset {
+  display: flex;
+  align-items: center;
+  padding: v.$spacing-sm;
+  border-radius: v.$border-radius;
+  margin-bottom: v.$spacing-xs;
+  background-color: rgba(#00a3ff, 0.1);
+  border-left: 3px solid #00a3ff;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateX(5px);
+    background-color: rgba(#00a3ff, 0.2);
+  }
+  
+  &__icon {
+    width: 30px;
+    height: 30px;
+    margin-right: v.$spacing-sm;
+    border-radius: 50%;
+    background-color: v.$white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  &__info {
+    flex: 1;
+  }
+  
+  &__name {
+    font-weight: bold;
+    color: v.$text-color;
+  }
+  
+  &__balance {
+    font-size: v.$font-size-small;
+    color: v.$text-color-light;
+  }
+  
+  &__value {
+    font-weight: bold;
+    color: #00a3ff;
+  }
 }
 
 // Estilos para a seção AI
@@ -70,6 +200,60 @@
   margin-top: v.$spacing-md;
   box-shadow: v.$box-shadow;
   border: 2px solid #00cc88; // Cor verde para AI
+  position: relative;
+  overflow: visible;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #00cc88, color.adjust(#00cc88, $lightness: 20%), #00cc88);
+    z-index: 1;
+  }
+  
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: v.$spacing-md;
+    padding-bottom: v.$spacing-sm;
+    border-bottom: 2px solid rgba(#00cc88, 0.3);
+    cursor: pointer;
+    
+    &:hover {
+      background-color: rgba(#00cc88, 0.1);
+    }
+  }
+  
+  &__title {
+    color: #00cc88;
+    font-size: v.$font-size-xlarge;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-shadow: 0 0 5px rgba(#00cc88, 0.5);
+  }
+  
+  &__toggle-icon {
+    margin-left: v.$spacing-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+  }
+  
+  &__subtitle {
+    margin-top: v.$spacing-xs;
+    color: v.$text-color-light;
+    font-size: v.$font-size-small;
+    font-style: italic;
+  }
 }
 
 .ai-advisor-button {
@@ -129,13 +313,97 @@
   padding: v.$spacing-md;
   border-left: 4px solid #00cc88;
   transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #00cc88, color.adjust(#00cc88, $lightness: 20%), #00cc88);
+    z-index: 1;
+  }
   
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    border-left-width: 6px;
   }
   
   &.unread {
     border-left-color: v.$primary-color;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: v.$primary-color;
+      box-shadow: 0 0 5px rgba(v.$primary-color, 0.5);
+    }
+  }
+  
+  &__title {
+    font-size: v.$font-size-medium;
+    font-weight: bold;
+    color: #00cc88;
+    margin-bottom: v.$spacing-xs;
+    display: flex;
+    align-items: center;
+    
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: #00cc88;
+      margin-right: 8px;
+      border-radius: 50%;
+    }
+  }
+  
+  &__content {
+    color: v.$text-color;
+    font-size: v.$font-size-normal;
+    line-height: 1.5;
+    margin-bottom: v.$spacing-sm;
+  }
+  
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: v.$spacing-sm;
+  }
+  
+  &__button {
+    background-color: rgba(#00cc88, 0.2);
+    color: #00cc88;
+    border: 1px solid #00cc88;
+    border-radius: v.$border-radius;
+    padding: v.$spacing-xs v.$spacing-sm;
+    font-size: v.$font-size-small;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background-color: #00cc88;
+      color: #ffffff;
+    }
+    
+    &--primary {
+      background-color: #00cc88;
+      color: #ffffff;
+      
+      &:hover {
+        background-color: color.adjust(#00cc88, $lightness: 10%);
+      }
+    }
   }
 }

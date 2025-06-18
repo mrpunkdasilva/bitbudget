@@ -1,5 +1,6 @@
 @use '../../styles/variables' as v;
 @use '../../styles/mixins' as m;
+@use "sass:color";
 
 .filter-area {
   background-color: v.$white;
@@ -33,7 +34,7 @@
     transition: background-color v.$transition-speed;
     
     &:hover {
-      background-color: darken(v.$primary-color, 10%);
+      background-color: color.adjust(v.$primary-color, $lightness: -10%);
     }
   }
   
@@ -72,7 +73,7 @@
     padding: v.$spacing-sm;
     border: 1px solid v.$gray;
     border-radius: v.$border-radius;
-    background-color: lighten(v.$white, 5%);
+    background-color: color.adjust(v.$white, $lightness: 5%);
     color: v.$text-color;
     font-size: v.$font-size-normal;
     
@@ -100,7 +101,7 @@
     transition: background-color v.$transition-speed;
     
     &:hover {
-      background-color: darken(v.$danger-color, 10%);
+      background-color: color.adjust(v.$danger-color, $lightness: -10%);
     }
   }
 }

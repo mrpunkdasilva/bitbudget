@@ -11,7 +11,7 @@
   border: 3px solid v.$primary-color;
   position: relative;
   overflow: visible; /* Garantir que o rótulo não seja cortado */
-  background-color: darken(v.$white, 3%);
+  background-color: color.adjust(v.$white, $lightness: -3%);
   padding: v.$spacing-lg v.$spacing-md;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   
@@ -101,7 +101,7 @@
     font-size: v.$font-size-medium;
     outline: none;
     transition: all 0.3s ease;
-    background-color: darken(v.$white, 5%);
+    background-color: color.adjust(v.$white, $lightness: -5%);
     color: v.$text-color;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
     
@@ -166,7 +166,7 @@
     font-size: v.$font-size-medium;
     outline: none;
     transition: all 0.3s ease;
-    background-color: darken(v.$white, 5%);
+    background-color: color.adjust(v.$white, $lightness: -5%);
     color: v.$text-color;
     cursor: pointer;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -218,7 +218,7 @@
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
-    box-shadow: 0 4px 0 darken(v.$primary-color, 15%);
+    box-shadow: 0 4px 0 color.adjust(v.$primary-color, $lightness: -15%);
     overflow: hidden;
     
     &::before {
@@ -240,9 +240,9 @@
     }
     
     &:hover {
-      background-color: lighten(v.$primary-color, 5%);
+      background-color: color.adjust(v.$primary-color, $lightness: 5%);
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 darken(v.$primary-color, 15%);
+      box-shadow: 0 6px 0 color.adjust(v.$primary-color, $lightness: -15%);
       
       &::before {
         opacity: 1;
@@ -251,20 +251,20 @@
     }
     
     &:active {
-      background-color: darken(v.$primary-color, 5%);
+      background-color: color.adjust(v.$primary-color, $lightness: -5%);
       transform: translateY(2px);
-      box-shadow: 0 2px 0 darken(v.$primary-color, 15%);
+      box-shadow: 0 2px 0 color.adjust(v.$primary-color, $lightness: -15%);
     }
     
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
       background-color: v.$gray;
-      box-shadow: 0 4px 0 darken(v.$gray, 15%);
+      box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -15%);
       
       &:hover {
         transform: none;
-        box-shadow: 0 4px 0 darken(v.$gray, 15%);
+        box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -15%);
       }
     }
     

@@ -4,6 +4,7 @@ import App from './App'
 import './styles/index.scss'
 import reportWebVitals from './reportWebVitals'
 import { AppProviders } from './contexts/AppProviders'
+// Não precisamos mais importar a configuração do PDF aqui
 
 // Easter egg no console
 console.log(`%c

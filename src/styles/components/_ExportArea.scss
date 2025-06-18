@@ -21,7 +21,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(90deg, v.$primary-color, lighten(v.$primary-color, 20%), v.$primary-color);
+    background: linear-gradient(90deg, v.$primary-color, color.adjust(v.$primary-color, $lightness: 20%), v.$primary-color);
     z-index: 1;
   }
   
@@ -107,27 +107,101 @@
     display: flex;
     flex-direction: column;
     gap: v.$spacing-md;
+  }
+  
+  &__section-title {
+    font-size: v.$font-size-medium;
+    color: v.$text-color;
+    margin-bottom: v.$spacing-sm;
+    font-weight: 600;
+    border-bottom: 1px solid v.$gray;
+    padding-bottom: v.$spacing-xs;
+  }
+  
+  &__type-selector {
+    margin-bottom: v.$spacing-md;
+    background-color: v.$light-gray;
+    padding: v.$spacing-md;
+    border-radius: v.$border-radius;
+    border: 1px solid v.$gray;
+  }
+  
+  &__type-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$spacing-md;
+  }
+  
+  &__type-label {
+    display: flex;
+    align-items: center;
+    padding: v.$spacing-sm;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: v.$border-radius;
+    cursor: pointer;
+    transition: all v.$transition-speed;
+    flex: 1;
+    min-width: 200px;
+    background-color: rgba(0, 0, 0, 0.2);
     
-    @include m.tablet {
-      flex-direction: row;
-      align-items: stretch;
-      justify-content: space-between;
+    &:hover {
+      border-color: color.adjust(v.$primary-color, $lightness: 20%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
+    
+    &--active {
+      border-color: v.$primary-color;
+      background-color: rgba(v.$primary-color, 0.15);
+    }
+  }
+  
+  &__type-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: v.$spacing-sm;
+    background-color: rgba(v.$primary-color, 0.2);
+    border-radius: 50%;
+    padding: v.$spacing-xs;
+    
+    svg {
+      color: v.$primary-color;
+    }
+  }
+  
+  &__type-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  &__type-text {
+    font-weight: bold;
+    color: v.$text-color;
+  }
+  
+  &__type-count {
+    font-size: v.$font-size-small;
+    color: v.$text-color-light;
   }
   
   &__format-selector {
     display: flex;
     flex-direction: column;
     gap: v.$spacing-sm;
-    background-color: v.$light-gray; // Já é escuro (v.$light-gray: #2a2a2a)
+    background-color: v.$light-gray;
     padding: v.$spacing-md;
     border-radius: v.$border-radius;
     border: 1px solid v.$gray;
     flex: 1;
-    
-    @include m.tablet {
-      max-width: 65%;
-    }
+  }
+  
+  &__format-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: v.$spacing-md;
   }
   
   &__radio-label {
@@ -232,7 +306,7 @@
     font-weight: bold;
     transition: all v.$transition-speed;
     margin-top: v.$spacing-sm;
-    box-shadow: 0 4px 0 darken(v.$primary-color, 10%);
+    box-shadow: 0 4px 0 color.adjust(v.$primary-color, $lightness: -10%);
     position: relative;
     display: flex;
     align-items: center;
@@ -248,24 +322,24 @@
     }
     
     &:hover {
-      background-color: lighten(v.$primary-color, 5%);
+      background-color: color.adjust(v.$primary-color, $lightness: 5%);
       transform: translateY(-2px);
-      box-shadow: 0 6px 0 darken(v.$primary-color, 10%);
+      box-shadow: 0 6px 0 color.adjust(v.$primary-color, $lightness: -10%);
     }
     
     &:active {
       transform: translateY(2px);
-      box-shadow: 0 2px 0 darken(v.$primary-color, 10%);
+      box-shadow: 0 2px 0 color.adjust(v.$primary-color, $lightness: -10%);
     }
     
     &:disabled {
       background-color: v.$gray;
       cursor: not-allowed;
-      box-shadow: 0 4px 0 darken(v.$gray, 10%);
+      box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -10%);
       
       &:hover {
         transform: none;
-        box-shadow: 0 4px 0 darken(v.$gray, 10%);
+        box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -10%);
       }
     }
     
@@ -295,12 +369,14 @@
     margin-top: v.$spacing-lg;
     border: 2px solid v.$primary-color;
     border-radius: v.$border-radius;
-    background-color: darken(v.$white, 5%); // Fundo ainda mais escuro
+    background-color: color.adjust(v.$white, $lightness: -5%); // Fundo ainda mais escuro
     overflow: hidden;
     display: flex;
     flex-direction: column;
     animation: fadeIn 0.3s ease-in-out;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 100; // Garantir que fique acima de outros elementos
     
     &-header {
       background-color: v.$primary-color;
@@ -309,6 +385,7 @@
       justify-content: space-between;
       align-items: center;
       color: #ffffff;
+      position: relative;
     }
     
     &-title {
@@ -319,7 +396,7 @@
     }
     
     &-close {
-      background: none;
+      background: rgba(255, 255, 255, 0.2);
       border: none;
       color: #ffffff;
       cursor: pointer;
@@ -329,10 +406,22 @@
       align-items: center;
       justify-content: center;
       transition: all v.$transition-speed;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      z-index: 1001; // Garantir que fique acima do iframe
+      width: 30px;
+      height: 30px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
       
       &:hover {
-        background-color: rgba(255, 255, 255, 0.2);
+        background-color: rgba(255, 255, 255, 0.4);
         transform: rotate(90deg);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5);
       }
     }
     
@@ -377,7 +466,7 @@
     &-footer {
       padding: v.$spacing-sm v.$spacing-md;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center; // Centralizar o botão
       background-color: v.$light-gray; // Já é escuro (v.$light-gray: #2a2a2a)
       border-top: 1px solid v.$gray;
     }
@@ -394,17 +483,24 @@
       align-items: center;
       gap: v.$spacing-sm;
       transition: all v.$transition-speed;
-      box-shadow: 0 2px 0 darken(v.$primary-color, 10%);
+      box-shadow: 0 2px 0 color.adjust(v.$primary-color, $lightness: -10%);
+      min-width: 200px;
+      justify-content: center;
       
       &:hover {
-        background-color: lighten(v.$primary-color, 5%);
+        background-color: color.adjust(v.$primary-color, $lightness: 5%);
         transform: translateY(-2px);
-        box-shadow: 0 4px 0 darken(v.$primary-color, 10%);
+        box-shadow: 0 4px 0 color.adjust(v.$primary-color, $lightness: -10%);
       }
       
       &:active {
         transform: translateY(1px);
-        box-shadow: 0 1px 0 darken(v.$primary-color, 10%);
+        box-shadow: 0 1px 0 color.adjust(v.$primary-color, $lightness: -10%);
+      }
+      
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.5), 0 2px 0 color.adjust(v.$primary-color, $lightness: -10%);
       }
       
       &:disabled {

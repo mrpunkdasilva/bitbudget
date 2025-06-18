@@ -32,6 +32,8 @@ const App = () => {
     startDate: null,
     endDate: null
   });
+  const [web3Expanded, setWeb3Expanded] = useState(false);
+  const [aiExpanded, setAiExpanded] = useState(false);
   const { addNotification, NotificationContainer, success, error, info } = useNotification();
 
   // Filter by month first
@@ -203,21 +205,66 @@ const App = () => {
         
         <FilterArea onFilterChange={handleFilterChange} />
         
-        <ExportArea list={displayList} />
+        <ExportArea 
+          list={displayList} 
+          categories={categories}
+        />
         
         {/* Seção de Criptomoedas */}
         <div className="web3-section">
-          <h2 className="section-title">Ativos Cripto</h2>
-          <div className="web3-container">
-            <WalletConnect />
-            <AssetsList />
+          <div className="web3-section__header" onClick={() => setWeb3Expanded(!web3Expanded)}>
+            <div className="web3-section__title">
+              Ativos Cripto
+              <span className="web3-section__toggle-icon">
+                {web3Expanded ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                )}
+              </span>
+            </div>
+            <div className="web3-section__subtitle">
+              Conecte sua carteira para gerenciar seus ativos digitais
+            </div>
           </div>
+          
+          {web3Expanded && (
+            <div className="web3-container">
+              <WalletConnect />
+              <AssetsList />
+            </div>
+          )}
         </div>
         
         {/* Seção de Recomendações IA */}
         <div className="ai-section">
-          <h2 className="section-title">Recomendações Inteligentes</h2>
-          <RecommendationsList />
+          <div className="ai-section__header" onClick={() => setAiExpanded(!aiExpanded)}>
+            <div className="ai-section__title">
+              Recomendações Inteligentes
+              <span className="ai-section__toggle-icon">
+                {aiExpanded ? (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="18 15 12 9 6 15"></polyline>
+                  </svg>
+                ) : (
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                )}
+              </span>
+            </div>
+            <div className="ai-section__subtitle">
+              Dicas personalizadas para melhorar suas finanças
+            </div>
+          </div>
+          
+          {aiExpanded && (
+            <RecommendationsList />
+          )}
         </div>
         
         {/* Botão flutuante de IA */}
@@ -230,6 +277,7 @@ const App = () => {
       </div>
       
       <Footer />
+      <NotificationContainer />
     </div>
   );
 }

@@ -5,8 +5,8 @@ WORKDIR /app
 # Copy package files
 COPY package.json package-lock.json* ./
 
-# Install dependencies
-RUN npm install
+# Install dependencies with legacy peer deps to resolve compatibility issues
+RUN npm install --legacy-peer-deps
 
 # Expose port for Vite dev server
 EXPOSE 3000

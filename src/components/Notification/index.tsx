@@ -72,36 +72,7 @@ export const Notification = ({ type, message, duration = 3000, onClose, index = 
                 onClick={handleClose}
                 aria-label="Fechar notificação"
                 type="button"
-                style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-                    border: '2px solid rgba(255, 255, 255, 0.5)',
-                    color: '#ffffff',
-                    borderRadius: '50%',
-                    width: '30px',
-                    height: '30px',
-                    minWidth: '30px',
-                    minHeight: '30px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    fontSize: '24px',
-                    fontWeight: 'bold',
-                    padding: 0,
-                    margin: 0,
-                    marginLeft: '10px',
-                    position: 'relative',
-                    zIndex: 100,
-                    boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
-                }}
-                onMouseOver={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
-                    e.currentTarget.style.transform = 'scale(1.1)';
-                }}
-                onMouseOut={(e) => {
-                    e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
-                    e.currentTarget.style.transform = 'scale(1)';
-                }}
+                className="notification__close"
             >
                 ×
             </button>
