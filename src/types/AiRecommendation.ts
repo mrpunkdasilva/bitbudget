@@ -1,9 +1,10 @@
 export interface AiRecommendation {
   id: string;
   title: string;
-  description: string;
-  type: string; // 'SAVING', 'INVESTMENT', 'BUDGET', 'GENERAL'
+  description?: string;
+  content?: string;
+  type: string;
   createdAt: string;
   isRead: boolean;
-  userId: string;
+  isApplied?: boolean;
 }

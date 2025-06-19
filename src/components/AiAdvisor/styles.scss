@@ -314,11 +314,52 @@
   &.read {
     opacity: 0.85;
   }
+  
+  // Estado de aplicado
+  &.applied {
+    border-color: var(--recommendation-color, #00cc88);
+    background-color: rgba(0, 204, 136, 0.05);
+    
+    &::before {
+      height: 4px;
+      background: var(--recommendation-color, #00cc88);
+    }
+  }
+  
+  // Badge de aplicado
+  &__applied-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.35rem 0.7rem;
+    background-color: rgba(0, 204, 136, 0.1);
+    color: #00cc88;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  
+  // Animação para quando uma recomendação é aplicada
+  &.applied {
+    animation: pulse 1.5s ease-in-out;
+  }
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+// Animação de pulso para feedback visual
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 204, 136, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 204, 136, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 204, 136, 0);
+  }
 }
 
 // Melhorias no grid de recomendações

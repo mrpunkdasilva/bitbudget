@@ -14,6 +14,8 @@ interface AiContextData {
   toggleAiAdvisor: () => void;
   generateRecommendation: () => Promise<void>;
   markAsRead: (id: string) => Promise<void>;
+  ignoreRecommendation: (id: string) => Promise<void>;
+  applyRecommendation: (id: string) => Promise<void>;
 }
 
 const AiContext = createContext<AiContextData>({} as AiContextData);
@@ -90,6 +92,40 @@ export const AiProvider: React.FC<{ children: React.ReactNode }> = ({ children }
     }
   };
 
+  const ignoreRecommendation = async (id: string) => {
+    if (!token) {
+      error('Você precisa estar logado para ignorar recomendações');
+      return;
+    }
+
+    try {
+      await aiAPI.ignoreRecommendation(token, id);
+      setRecommendations(prev => prev.filter(rec => rec.id !== id));
+      success('Recomendação ignorada com sucesso');
+    } catch (err) {
+      error('Falha ao ignorar recomendação');
+      throw err;
+    }
+  };
+
+  const applyRecommendation = async (id: string) => {
+    if (!token) {
+      error('Você precisa estar logado para aplicar recomendações');
+      return;
+    }
+
+    try {
+      await aiAPI.applyRecommendation(token, id);
+      setRecommendations(prev =>
+        prev.map(rec => (rec.id === id ? { ...rec, isApplied: true, isRead: true } : rec))
+      );
+      success('Recomendação aplicada com sucesso!');
+    } catch (err) {
+      error('Falha ao aplicar recomendação');
+      throw err;
+    }
+  };
+
   return (
     <AiContext.Provider
       value={{
@@ -101,6 +137,8 @@ export const AiProvider: React.FC<{ children: React.ReactNode }> = ({ children }
         toggleAiAdvisor,
         generateRecommendation,
         markAsRead,
+        ignoreRecommendation,
+        applyRecommendation,
       }}
     >
       {children}
