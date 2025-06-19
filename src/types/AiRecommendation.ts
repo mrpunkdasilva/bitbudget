@@ -1,9 +1,9 @@
-export type AiRecommendation = {
+export interface AiRecommendation {
   id: string;
   title: string;
-  content: string;
-  type: 'SAVING' | 'INVESTMENT' | 'BUDGET' | 'GENERAL';
-  isRead: boolean;
+  description: string;
+  type: string; // 'SAVING', 'INVESTMENT', 'BUDGET', 'GENERAL'
   createdAt: string;
+  isRead: boolean;
   userId: string;
-};
+}

@@ -16,6 +16,10 @@
 
 // Importar estilos de componentes individuais
 @use '../components/Notification/styles.scss' as Notification;
+@use '../components/QuickTips/styles.scss' as QuickTips;
+@use '../components/SmartAlerts/styles.scss' as SmartAlerts;
+@use '../components/SmartInsights/styles.scss' as SmartInsights;
+@use '../components/AiAdvisor/styles.scss' as AiAdvisor;
 
 // Estilos para os novos componentes
 .section-title {

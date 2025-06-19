@@ -6,7 +6,7 @@ export const AssetsList: React.FC = () => {
   const { assets, syncAssets, isSyncing, walletAddress } = useWeb3();
 
   // Use dados mocados se não houver ativos reais
-  const displayAssets = assets.length > 0 ? assets : (walletAddress ? mockWeb3Assets : []);
+  const displayAssets = assets.length > 0 ? assets : walletAddress ? mockWeb3Assets : [];
 
   // Format date to a readable string
   const formatDate = (dateString: string) => {
@@ -20,7 +20,7 @@ export const AssetsList: React.FC = () => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(value);
   };
 
@@ -33,12 +33,12 @@ export const AssetsList: React.FC = () => {
   // Get crypto icon
   const getCryptoIcon = (symbol: string) => {
     const icons: { [key: string]: string } = {
-      'BTC': '₿',
-      'ETH': 'Ξ',
-      'BNB': '🔶',
-      'ADA': '🔷',
-      'SOL': '☀️',
-      'MATIC': '🔮'
+      BTC: '₿',
+      ETH: 'Ξ',
+      BNB: '🔶',
+      ADA: '🔷',
+      SOL: '☀️',
+      MATIC: '🔮',
     };
     return icons[symbol] || '🪙';
   };
@@ -55,15 +55,11 @@ export const AssetsList: React.FC = () => {
     <div className="assets-list">
       <div className="assets-header">
         <h3>Seus Ativos Web3</h3>
-        <button 
-          className="btn btn-secondary" 
-          onClick={syncAssets} 
-          disabled={isSyncing}
-        >
+        <button className="btn btn-secondary" onClick={syncAssets} disabled={isSyncing}>
           {isSyncing ? 'Sincronizando...' : 'Sincronizar'}
         </button>
       </div>
-      
+
       {displayAssets.length === 0 ? (
         <div className="assets-empty">
           <p>Nenhum ativo encontrado. Clique em Sincronizar para atualizar.</p>
@@ -79,7 +75,7 @@ export const AssetsList: React.FC = () => {
                 </div>
                 <span className="asset-symbol">{asset.symbol}</span>
               </div>
-              
+
               <div className="asset-balance">
                 <span className="balance-value">{asset.balance}</span>
                 <span className="balance-symbol">{asset.symbol}</span>
@@ -105,18 +101,18 @@ export const AssetsList: React.FC = () => {
                   )}
                 </div>
               )}
-              
+
               <div className="asset-details">
                 <div className="asset-type">
                   <span className="label">Tipo:</span>
                   <span className="value">{asset.tokenType}</span>
                 </div>
-                
+
                 <div className="asset-network">
                   <span className="label">Rede:</span>
                   <span className="value">{asset.network}</span>
                 </div>
-                
+
                 <div className="asset-updated">
                   <span className="label">Atualizado:</span>
                   <span className="value">{formatDate(asset.lastUpdated)}</span>

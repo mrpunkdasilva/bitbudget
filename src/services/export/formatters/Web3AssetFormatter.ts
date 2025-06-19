@@ -17,7 +17,7 @@ export class Web3AssetFormatter {
       Saldo: asset.balance,
       'Tipo de Token': asset.tokenType,
       Rede: asset.network,
-      'Última Atualização': new Date(asset.lastUpdated).toLocaleString('pt-BR')
+      'Última Atualização': new Date(asset.lastUpdated).toLocaleString('pt-BR'),
     }));
   }
 }

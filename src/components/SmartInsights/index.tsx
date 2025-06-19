@@ -13,13 +13,13 @@ interface InsightCardProps {
   color?: 'success' | 'warning' | 'danger' | 'info';
 }
 
-const InsightCard: React.FC<InsightCardProps> = ({ 
-  icon, 
-  title, 
-  description, 
-  value, 
+const InsightCard: React.FC<InsightCardProps> = ({
+  icon,
+  title,
+  description,
+  value,
   trend = 'neutral',
-  color = 'info' 
+  color = 'info',
 }) => (
   <div className={`insight-card insight-card--${color}`}>
     <div className="insight-card__icon">
@@ -32,9 +32,7 @@ const InsightCard: React.FC<InsightCardProps> = ({
         <div className="insight-card__value">
           <span className="value">{value}</span>
           {trend !== 'neutral' && (
-            <span className={`trend trend--${trend}`}>
-              {trend === 'up' ? '↗' : '↘'}
-            </span>
+            <span className={`trend trend--${trend}`}>{trend === 'up' ? '↗' : '↘'}</span>
           )}
         </div>
       )}
@@ -56,7 +54,7 @@ export const SmartInsights: React.FC = () => {
 
       try {
         setIsLoading(true);
-        
+
         // Get current month and last month data
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1;
@@ -66,14 +64,14 @@ export const SmartInsights: React.FC = () => {
 
         const [currentTransactions, lastMonthTransactions] = await Promise.all([
           transactionAPI.getTransactions(token, currentMonth, currentYear),
-          transactionAPI.getTransactions(token, lastMonth, lastMonthYear)
+          transactionAPI.getTransactions(token, lastMonth, lastMonthYear),
         ]);
 
         const generatedInsights = await analyzeTransactions(
-          currentTransactions, 
+          currentTransactions,
           lastMonthTransactions
         );
-        
+
         setInsights(generatedInsights);
       } catch (error) {
         console.error('Failed to generate insights:', error);
@@ -86,7 +84,7 @@ export const SmartInsights: React.FC = () => {
   }, [token]);
 
   const analyzeTransactions = async (
-    currentTransactions: Item[], 
+    currentTransactions: Item[],
     lastMonthTransactions: Item[]
   ): Promise<InsightCardProps[]> => {
     const insights: InsightCardProps[] = [];
@@ -95,7 +93,7 @@ export const SmartInsights: React.FC = () => {
     const currentExpenses = currentTransactions
       .filter(t => t.category.isExpense)
       .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
-    
+
     const lastExpenses = lastMonthTransactions
       .filter(t => t.category.isExpense)
       .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
@@ -109,7 +107,7 @@ export const SmartInsights: React.FC = () => {
       const percentChange = ((currentExpenses - lastExpenses) / lastExpenses) * 100;
       const isIncreasing = percentChange > 5;
       const isDecreasing = percentChange < -5;
-      
+
       if (isIncreasing) {
         insights.push({
           icon: '📈',
@@ -117,7 +115,7 @@ export const SmartInsights: React.FC = () => {
           description: `Seus gastos aumentaram ${percentChange.toFixed(1)}% em relação ao mês passado`,
           value: `+R$ ${(currentExpenses - lastExpenses).toFixed(2)}`,
           trend: 'up',
-          color: 'warning'
+          color: 'warning',
         });
       } else if (isDecreasing) {
         insights.push({
@@ -126,20 +124,21 @@ export const SmartInsights: React.FC = () => {
           description: `Parabéns! Você economizou ${Math.abs(percentChange).toFixed(1)}% este mês`,
           value: `-R$ ${Math.abs(currentExpenses - lastExpenses).toFixed(2)}`,
           trend: 'down',
-          color: 'success'
+          color: 'success',
         });
       }
     }
 
     // Category analysis
-    const categoryTotals: { [key: string]: { total: number; title: string; isExpense: boolean } } = {};
+    const categoryTotals: { [key: string]: { total: number; title: string; isExpense: boolean } } =
+      {};
     currentTransactions.forEach(transaction => {
       const categoryName = transaction.category.name;
       if (!categoryTotals[categoryName]) {
         categoryTotals[categoryName] = {
           total: 0,
           title: transaction.category.title,
-          isExpense: transaction.category.isExpense
+          isExpense: transaction.category.isExpense,
         };
       }
       categoryTotals[categoryName].total += parseFloat(transaction.amount.toString());
@@ -152,14 +151,15 @@ export const SmartInsights: React.FC = () => {
 
     if (expenseCategories.length > 0) {
       const [topCategory, topCategoryData] = expenseCategories[0];
-      const percentOfTotal = currentExpenses > 0 ? (topCategoryData.total / currentExpenses) * 100 : 0;
-      
+      const percentOfTotal =
+        currentExpenses > 0 ? (topCategoryData.total / currentExpenses) * 100 : 0;
+
       insights.push({
         icon: '🎯',
         title: 'Maior Categoria de Gasto',
         description: `${topCategoryData.title} representa ${percentOfTotal.toFixed(1)}% dos seus gastos`,
         value: `R$ ${topCategoryData.total.toFixed(2)}`,
-        color: percentOfTotal > 40 ? 'warning' : 'info'
+        color: percentOfTotal > 40 ? 'warning' : 'info',
       });
     }
 
@@ -174,7 +174,7 @@ export const SmartInsights: React.FC = () => {
           title: 'Atenção: Gastos > Receita',
           description: 'Seus gastos excedem sua receita este mês',
           value: `${savingsRate.toFixed(1)}%`,
-          color: 'danger'
+          color: 'danger',
         };
       } else if (savingsRate < 10) {
         savingsInsight = {
@@ -182,7 +182,7 @@ export const SmartInsights: React.FC = () => {
           title: 'Taxa de Poupança Baixa',
           description: 'Tente poupar pelo menos 20% da sua receita',
           value: `${savingsRate.toFixed(1)}%`,
-          color: 'warning'
+          color: 'warning',
         };
       } else {
         savingsInsight = {
@@ -190,10 +190,10 @@ export const SmartInsights: React.FC = () => {
           title: 'Ótima Taxa de Poupança',
           description: 'Você está poupando bem! Continue assim',
           value: `${savingsRate.toFixed(1)}%`,
-          color: 'success'
+          color: 'success',
         };
       }
-      
+
       insights.push(savingsInsight);
     }
 

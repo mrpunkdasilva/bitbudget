@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { transactionAPI } from '../../services/api';
 import { Item } from '../../types/Item';
+import { categories } from '../../data/categories';
 import './styles.scss';
 
 interface SmartAlert {
@@ -32,21 +33,19 @@ export const SmartAlerts: React.FC = () => {
 
       try {
         setIsLoading(true);
-        
+
         // Get recent transactions (last 7 days)
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1;
         const currentYear = currentDate.getFullYear();
-        
+
         const transactions = await transactionAPI.getTransactions(token, currentMonth, currentYear);
-        
+
         // Filter transactions from last 7 days
         const weekAgo = new Date();
         weekAgo.setDate(weekAgo.getDate() - 7);
-        
-        const recentTransactions = transactions.filter(t => 
-          new Date(t.date) >= weekAgo
-        );
+
+        const recentTransactions = transactions.filter(t => new Date(t.date) >= weekAgo);
 
         const generatedAlerts = await analyzeForAlerts(recentTransactions, transactions);
         setAlerts(generatedAlerts);
@@ -68,13 +67,14 @@ export const SmartAlerts: React.FC = () => {
 
     // 1. Spending spike alert
     const recentExpenses = recentTransactions
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+      .filter(t => categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const dailyAverage = recentExpenses / 7;
-    const monthlyAverage = allMonthTransactions
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0) / new Date().getDate();
+    const monthlyAverage =
+      allMonthTransactions
+        .filter(t => categories[t.category].expense)
+        .reduce((sum, t) => sum + t.value, 0) / new Date().getDate();
 
     if (dailyAverage > monthlyAverage * 1.5) {
       alerts.push({
@@ -83,14 +83,14 @@ export const SmartAlerts: React.FC = () => {
         icon: '⚡',
         title: 'Gastos Acima da Média',
         message: `Você gastou R$ ${recentExpenses.toFixed(2)} nos últimos 7 dias, acima da sua média mensal.`,
-        dismissible: true
+        dismissible: true,
       });
     }
 
     // 2. No transactions today
     const today = new Date().toDateString();
-    const todayTransactions = recentTransactions.filter(t => 
-      new Date(t.date).toDateString() === today
+    const todayTransactions = recentTransactions.filter(
+      t => new Date(t.date).toDateString() === today
     );
 
     if (todayTransactions.length === 0 && new Date().getHours() > 18) {
@@ -108,16 +108,16 @@ export const SmartAlerts: React.FC = () => {
             if (inputArea) {
               inputArea.scrollIntoView({ behavior: 'smooth' });
             }
-          }
+          },
         },
-        dismissible: true
+        dismissible: true,
       });
     }
 
     // 3. Duplicate transaction detection
     const duplicateGroups = new Map<string, Item[]>();
     recentTransactions.forEach(transaction => {
-      const key = `${transaction.amount}-${transaction.category.name}-${new Date(transaction.date).toDateString()}`;
+      const key = `${transaction.value}-${transaction.category}-${new Date(transaction.date).toDateString()}`;
       if (!duplicateGroups.has(key)) {
         duplicateGroups.set(key, []);
       }
@@ -133,17 +133,17 @@ export const SmartAlerts: React.FC = () => {
         icon: '👥',
         title: 'Possíveis Transações Duplicadas',
         message: `Encontrei ${duplicates.length} grupo(s) de transações similares. Verifique se não há duplicatas.`,
-        dismissible: true
+        dismissible: true,
       });
     }
 
     // 4. Weekend spending pattern
     const weekendTransactions = recentTransactions.filter(t => {
       const day = new Date(t.date).getDay();
-      return (day === 0 || day === 6) && t.category.isExpense;
+      return (day === 0 || day === 6) && categories[t.category].expense;
     });
 
-    const weekendSpending = weekendTransactions.reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+    const weekendSpending = weekendTransactions.reduce((sum, t) => sum + t.value, 0);
     const weekendPercentage = recentExpenses > 0 ? (weekendSpending / recentExpenses) * 100 : 0;
 
     if (weekendPercentage > 50) {
@@ -153,19 +153,19 @@ export const SmartAlerts: React.FC = () => {
         icon: '🎪',
         title: 'Gastos Concentrados no Fim de Semana',
         message: `${weekendPercentage.toFixed(1)}% dos seus gastos foram nos fins de semana. Considere planejar o orçamento para lazer.`,
-        dismissible: true
+        dismissible: true,
       });
     }
 
     // 5. Budget milestone (25th of month)
-    const today = new Date();
-    const isEndOfMonth = today.getDate() >= 25;
-    
+    const currentDate = new Date();
+    const isEndOfMonth = currentDate.getDate() >= 25;
+
     if (isEndOfMonth) {
       const monthlyBudget = 3000; // This could come from user settings
       const monthlySpending = allMonthTransactions
-        .filter(t => t.category.isExpense)
-        .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+        .filter(t => categories[t.category].expense)
+        .reduce((sum, t) => sum + t.value, 0);
 
       const budgetPercentage = (monthlySpending / monthlyBudget) * 100;
 
@@ -176,7 +176,7 @@ export const SmartAlerts: React.FC = () => {
           icon: '🚨',
           title: 'Orçamento Quase Excedido',
           message: `Você já gastou ${budgetPercentage.toFixed(1)}% do seu orçamento mensal. Cuidado com os gastos restantes!`,
-          dismissible: true
+          dismissible: true,
         });
       } else if (budgetPercentage < 70) {
         alerts.push({
@@ -185,7 +185,7 @@ export const SmartAlerts: React.FC = () => {
           icon: '🎯',
           title: 'Orçamento Sob Controle',
           message: `Parabéns! Você está usando apenas ${budgetPercentage.toFixed(1)}% do seu orçamento mensal.`,
-          dismissible: true
+          dismissible: true,
         });
       }
     }
@@ -193,21 +193,21 @@ export const SmartAlerts: React.FC = () => {
     // 6. Smart tips based on patterns
     const categoryTotals: { [key: string]: number } = {};
     allMonthTransactions
-      .filter(t => t.category.isExpense)
+      .filter(t => categories[t.category].expense)
       .forEach(t => {
-        categoryTotals[t.category.name] = (categoryTotals[t.category.name] || 0) + parseFloat(t.amount.toString());
+        categoryTotals[t.category] = (categoryTotals[t.category] || 0) + t.value;
       });
 
-    const topCategory = Object.entries(categoryTotals)
-      .sort((a, b) => b[1] - a[1])[0];
+    const topCategory = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1])[0];
 
-    if (topCategory && Math.random() < 0.3) { // 30% chance to show tip
+    if (topCategory && Math.random() < 0.3) {
+      // 30% chance to show tip
       const tips = [
         'Considere definir um limite mensal para sua categoria de maior gasto.',
         'Que tal revisar assinaturas e serviços recorrentes?',
         'Experimente a regra 50/30/20: 50% necessidades, 30% desejos, 20% poupança.',
         'Use a técnica dos 24 horas: espere um dia antes de compras não essenciais.',
-        'Considere usar dinheiro físico para categorias de maior gasto - ajuda a controlar.'
+        'Considere usar dinheiro físico para categorias de maior gasto - ajuda a controlar.',
       ];
 
       alerts.push({
@@ -216,7 +216,7 @@ export const SmartAlerts: React.FC = () => {
         icon: '💡',
         title: 'Dica Inteligente',
         message: tips[Math.floor(Math.random() * tips.length)],
-        dismissible: true
+        dismissible: true,
       });
     }
 
@@ -249,23 +249,20 @@ export const SmartAlerts: React.FC = () => {
           <div className="smart-alert__icon">
             <span>{alert.icon}</span>
           </div>
-          
+
           <div className="smart-alert__content">
             <h4 className="smart-alert__title">{alert.title}</h4>
             <p className="smart-alert__message">{alert.message}</p>
-            
+
             {alert.action && (
-              <button 
-                className="smart-alert__action"
-                onClick={alert.action.onClick}
-              >
+              <button className="smart-alert__action" onClick={alert.action.onClick}>
                 {alert.action.text}
               </button>
             )}
           </div>
-          
+
           {alert.dismissible && (
-            <button 
+            <button
               className="smart-alert__dismiss"
               onClick={() => dismissAlert(alert.id)}
               title="Dispensar"

@@ -15,21 +15,16 @@ type Props = {
   recommendations?: AiRecommendation[];
 };
 
-export const ExportArea = ({ 
-  list, 
-  categories = {}, 
-  assets = [], 
-  recommendations = [] 
-}: Props) => {
+export const ExportArea = ({ list, categories = {}, assets = [], recommendations = [] }: Props) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [exportType, setExportType] = useState<ExportType>('transactions');
   const [exportFormat, setExportFormat] = useState<ExportFormat>('csv');
-  
+
   const { exportData, isExporting } = useExport({
     transactions: list,
     categories,
     assets,
-    recommendations
+    recommendations,
   });
 
   const handleExport = async () => {
@@ -51,37 +46,26 @@ export const ExportArea = ({
 
   return (
     <div className="export-area">
-      <div 
-        className="export-area__header" 
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
+      <div className="export-area__header" onClick={() => setIsExpanded(!isExpanded)}>
         <div className="export-area__title">
           Exportar Dados
-          <span className="export-area__toggle-icon">
-            {isExpanded ? '🔽' : '▶️'}
-          </span>
+          <span className="export-area__toggle-icon">{isExpanded ? '🔽' : '▶️'}</span>
         </div>
-        <div className="export-area__subtitle">
-          Exporte seus dados em diferentes formatos
-        </div>
+        <div className="export-area__subtitle">Exporte seus dados em diferentes formatos</div>
       </div>
-      
+
       {isExpanded && (
         <div className="export-area__content">
           <div className="export-area__options">
             <div className="export-area__option-group">
               <label>Tipo de Dados:</label>
-              <select 
-                value={exportType} 
-                onChange={(e) => setExportType(e.target.value as ExportType)}
+              <select
+                value={exportType}
+                onChange={e => setExportType(e.target.value as ExportType)}
                 disabled={isExporting}
               >
-                <option value="transactions">
-                  Transações ({getDataCount('transactions')})
-                </option>
-                <option value="crypto">
-                  Ativos Cripto ({getDataCount('crypto')})
-                </option>
+                <option value="transactions">Transações ({getDataCount('transactions')})</option>
+                <option value="crypto">Ativos Cripto ({getDataCount('crypto')})</option>
                 <option value="recommendations">
                   Recomendações ({getDataCount('recommendations')})
                 </option>
@@ -90,9 +74,9 @@ export const ExportArea = ({
 
             <div className="export-area__option-group">
               <label>Formato:</label>
-              <select 
-                value={exportFormat} 
-                onChange={(e) => setExportFormat(e.target.value as ExportFormat)}
+              <select
+                value={exportFormat}
+                onChange={e => setExportFormat(e.target.value as ExportFormat)}
                 disabled={isExporting}
               >
                 <option value="csv">CSV</option>
@@ -102,7 +86,7 @@ export const ExportArea = ({
             </div>
           </div>
 
-          <button 
+          <button
             className="export-area__export-button"
             onClick={handleExport}
             disabled={isExporting || getDataCount(exportType) === 0}
@@ -111,9 +95,7 @@ export const ExportArea = ({
           </button>
 
           {getDataCount(exportType) === 0 && (
-            <p className="export-area__no-data">
-              Nenhum dado disponível para exportação.
-            </p>
+            <p className="export-area__no-data">Nenhum dado disponível para exportação.</p>
           )}
         </div>
       )}

@@ -21,7 +21,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
   const [assets, setAssets] = useState<Web3Asset[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  
+
   const { token, user } = useAuth();
   const { error, success, info } = useNotification();
 
@@ -32,7 +32,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
         try {
           const { walletAddress } = await web3API.getWalletInfo(token);
           setWalletAddress(walletAddress);
-          
+
           // Load assets
           const assets = await web3API.getAssets(token);
           setAssets(assets);
@@ -42,21 +42,21 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       }
     };
-    
+
     loadWalletInfo();
   }, [token, user]);
 
   const connectWallet = async (address: string) => {
     try {
       setIsConnecting(true);
-      
+
       // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       // Usar dados mocados
       setWalletAddress(mockWalletAddress);
       success('Carteira conectada com sucesso!');
-      
+
       // Sync assets after connecting wallet
       await syncAssets();
     } catch (err) {
@@ -72,13 +72,13 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
       info('Conecte uma carteira primeiro para sincronizar ativos');
       return;
     }
-    
+
     try {
       setIsSyncing(true);
-      
+
       // Simular delay de API
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
+
       // Usar dados mocados
       setAssets(mockWeb3Assets);
       success(`${mockWeb3Assets.length} ativos sincronizados com sucesso!`);
@@ -98,7 +98,7 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
         isConnecting,
         isSyncing,
         connectWallet,
-        syncAssets
+        syncAssets,
       }}
     >
       {children}
@@ -108,10 +108,10 @@ export const Web3Provider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useWeb3 = () => {
   const context = useContext(Web3Context);
-  
+
   if (!context) {
     throw new Error('useWeb3 must be used within a Web3Provider');
   }
-  
+
   return context;
 };

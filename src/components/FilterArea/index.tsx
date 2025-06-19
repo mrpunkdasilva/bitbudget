@@ -3,7 +3,7 @@ import { categories } from '../../data/categories';
 
 type Props = {
   onFilterChange: (filters: FilterOptions) => void;
-}
+};
 
 export type FilterOptions = {
   searchText: string;
@@ -12,7 +12,7 @@ export type FilterOptions = {
   maxValue: number | null;
   startDate: Date | null;
   endDate: Date | null;
-}
+};
 
 export const FilterArea = ({ onFilterChange }: Props) => {
   const [searchText, setSearchText] = useState('');
@@ -33,7 +33,7 @@ export const FilterArea = ({ onFilterChange }: Props) => {
       minValue: minValue ? parseFloat(minValue) : null,
       maxValue: maxValue ? parseFloat(maxValue) : null,
       startDate: startDate ? new Date(startDate) : null,
-      endDate: endDate ? new Date(endDate) : null
+      endDate: endDate ? new Date(endDate) : null,
     };
 
     onFilterChange(filters);
@@ -52,7 +52,7 @@ export const FilterArea = ({ onFilterChange }: Props) => {
     <div className="filter-area">
       <div className="filter-area__header">
         <div className="filter-area__title">Filtrar Transações</div>
-        <button 
+        <button
           className="filter-area__toggle-button"
           onClick={() => setIsExpanded(!isExpanded)}
           aria-expanded={isExpanded}
@@ -67,10 +67,10 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Buscar por texto</div>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   className="filter-area__input"
-                  value={searchText} 
+                  value={searchText}
                   onChange={e => setSearchText(e.target.value)}
                   placeholder="Buscar por título..."
                 />
@@ -80,14 +80,16 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Categoria</div>
-                <select 
+                <select
                   className="filter-area__select"
-                  value={category} 
+                  value={category}
                   onChange={e => setCategory(e.target.value)}
                 >
                   <option value="">Todas as categorias</option>
                   {categoryKeys.map((key, index) => (
-                    <option key={index} value={key}>{categories[key].title}</option>
+                    <option key={index} value={key}>
+                      {categories[key].title}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -98,10 +100,10 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Valor Mínimo</div>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   className="filter-area__input"
-                  value={minValue} 
+                  value={minValue}
                   onChange={e => setMinValue(e.target.value)}
                   placeholder="R$ 0,00"
                   min="0"
@@ -113,10 +115,10 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Valor Máximo</div>
-                <input 
-                  type="number" 
+                <input
+                  type="number"
                   className="filter-area__input"
-                  value={maxValue} 
+                  value={maxValue}
                   onChange={e => setMaxValue(e.target.value)}
                   placeholder="Sem limite"
                   min="0"
@@ -130,10 +132,10 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Data Inicial</div>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   className="filter-area__input"
-                  value={startDate} 
+                  value={startDate}
                   onChange={e => setStartDate(e.target.value)}
                 />
               </label>
@@ -142,10 +144,10 @@ export const FilterArea = ({ onFilterChange }: Props) => {
             <div className="filter-area__field">
               <label className="filter-area__label">
                 <div className="filter-area__label-text">Data Final</div>
-                <input 
-                  type="date" 
+                <input
+                  type="date"
                   className="filter-area__input"
-                  value={endDate} 
+                  value={endDate}
                   onChange={e => setEndDate(e.target.value)}
                 />
               </label>
@@ -153,10 +155,7 @@ export const FilterArea = ({ onFilterChange }: Props) => {
           </div>
 
           <div className="filter-area__actions">
-            <button 
-              className="filter-area__clear-button"
-              onClick={clearFilters}
-            >
+            <button className="filter-area__clear-button" onClick={clearFilters}>
               Limpar Filtros
             </button>
           </div>

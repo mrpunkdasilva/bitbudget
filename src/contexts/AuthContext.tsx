@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       setIsLoading(true);
       const data = await authAPI.login(email, password);
-      
+
       // Save to state
       setUser({
         id: data.id,
@@ -47,21 +47,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         email: data.email,
         isVerified: true,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       });
       setToken(data.token);
-      
+
       // Save to localStorage
       localStorage.setItem('@BitBudget:token', data.token);
-      localStorage.setItem('@BitBudget:user', JSON.stringify({
-        id: data.id,
-        name: data.name,
-        email: data.email,
-        isVerified: true,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
-      }));
-      
+      localStorage.setItem(
+        '@BitBudget:user',
+        JSON.stringify({
+          id: data.id,
+          name: data.name,
+          email: data.email,
+          isVerified: true,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        })
+      );
+
       success('Login realizado com sucesso!');
     } catch (err) {
       error('Falha no login. Verifique suas credenciais.');
@@ -88,33 +91,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Clear state
     setUser(null);
     setToken(null);
-    
+
     // Clear localStorage
     localStorage.removeItem('@BitBudget:token');
     localStorage.removeItem('@BitBudget:user');
-    
+
     success('Logout realizado com sucesso!');
   };
 
   const updateProfile = async (userData: Partial<User>) => {
     try {
       if (!token) throw new Error('User not authenticated');
-      
+
       setIsLoading(true);
       const updatedUser = await userAPI.updateProfile(token, userData);
-      
+
       // Update state
       setUser(prevUser => {
         if (!prevUser) return updatedUser;
         return { ...prevUser, ...updatedUser };
       });
-      
+
       // Update localStorage
-      localStorage.setItem('@BitBudget:user', JSON.stringify({
-        ...user,
-        ...updatedUser
-      }));
-      
+      localStorage.setItem(
+        '@BitBudget:user',
+        JSON.stringify({
+          ...user,
+          ...updatedUser,
+        })
+      );
+
       success('Perfil atualizado com sucesso!');
     } catch (err) {
       error('Falha ao atualizar perfil. Tente novamente.');
@@ -134,7 +140,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         login,
         register,
         logout,
-        updateProfile
+        updateProfile,
       }}
     >
       {children}
@@ -144,10 +150,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  
+
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
-  
+
   return context;
 };

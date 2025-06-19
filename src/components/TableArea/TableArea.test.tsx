@@ -12,7 +12,7 @@ vi.mock('../TableItem', () => ({
       <td>{item.title}</td>
       <td>{item.value}</td>
     </tr>
-  )
+  ),
 }));
 
 describe('TableArea Component', () => {
@@ -21,19 +21,19 @@ describe('TableArea Component', () => {
       date: new Date(2023, 9, 15),
       category: 'food',
       title: 'Almoço',
-      value: 45.5
+      value: 45.5,
     },
     {
       date: new Date(2023, 9, 16),
       category: 'rent',
       title: 'Aluguel',
-      value: 1200
-    }
+      value: 1200,
+    },
   ];
 
   it('renders the table headers correctly', () => {
     render(<TableArea list={mockItems} />);
-    
+
     expect(screen.getByText('Data')).toBeInTheDocument();
     expect(screen.getByText('Categoria')).toBeInTheDocument();
     expect(screen.getByText('Título')).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('TableArea Component', () => {
 
   it('renders the correct number of items', () => {
     render(<TableArea list={mockItems} />);
-    
+
     // Check for the number of table items
     const tableItems = screen.getAllByTestId('table-item');
     expect(tableItems.length).toBe(2);
@@ -50,24 +50,24 @@ describe('TableArea Component', () => {
 
   it('renders an empty table when no items are provided', () => {
     render(<TableArea list={[]} />);
-    
+
     // Headers should still be present
     expect(screen.getByText('Data')).toBeInTheDocument();
     expect(screen.getByText('Categoria')).toBeInTheDocument();
     expect(screen.getByText('Título')).toBeInTheDocument();
     expect(screen.getByText('Valor')).toBeInTheDocument();
-    
+
     // But no items should be rendered
     expect(screen.queryByTestId('table-item')).not.toBeInTheDocument();
-    
+
     // Empty message should be displayed
     expect(screen.getByText('Nenhuma transação encontrada.')).toBeInTheDocument();
   });
-  
+
   it('passes the onDeleteItem function to TableItem', () => {
     const onDeleteMock = vi.fn();
     render(<TableArea list={mockItems} onDeleteItem={onDeleteMock} />);
-    
+
     // Check if the correct number of table items are rendered
     const tableItems = screen.getAllByTestId('table-item');
     expect(tableItems.length).toBe(2);

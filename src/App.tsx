@@ -1,8 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Item } from './types/Item';
-import { Category } from './types/Category';
 import { categories } from './data/categories';
-import { items } from './data/items';
+import { items } from './data/items'; // Importando items
 import { getCurrentMonth, filterListByMonth } from './helpers/dateFilter';
 import { TableArea } from './components/TableArea';
 import { InfoArea } from './components/InfoArea';
@@ -22,6 +21,7 @@ import { SmartInsights } from './components/SmartInsights';
 import { SmartAlerts } from './components/SmartAlerts';
 import { FinancialSummary } from './components/FinancialSummary';
 import { QuickTips } from './components/QuickTips';
+import { useAi } from './contexts/AiContext';
 
 const App = () => {
   const [list, setList] = useState(items);
@@ -36,11 +36,12 @@ const App = () => {
     minValue: null,
     maxValue: null,
     startDate: null,
-    endDate: null
+    endDate: null,
   });
   const [web3Expanded, setWeb3Expanded] = useState(false);
   const [aiExpanded, setAiExpanded] = useState(false);
   const { addNotification, NotificationContainer, success, error, info } = useNotification();
+  const { isAiAdvisorOpen } = useAi();
 
   // Filter by month first
   useEffect(() => {
@@ -51,45 +52,48 @@ const App = () => {
   const applyFilters = useCallback((items: Item[], filters: FilterOptions) => {
     return items.filter(item => {
       // Text search filter
-      if (filters.searchText && !item.title.toLowerCase().includes(filters.searchText.toLowerCase())) {
+      if (
+        filters.searchText &&
+        !item.title.toLowerCase().includes(filters.searchText.toLowerCase())
+      ) {
         return false;
       }
-      
+
       // Category filter
       if (filters.category && item.category !== filters.category) {
         return false;
       }
-      
+
       // Value range filters
       if (filters.minValue !== null && item.value < filters.minValue) {
         return false;
       }
-      
+
       if (filters.maxValue !== null && item.value > filters.maxValue) {
         return false;
       }
-      
+
       // Date range filters
       if (filters.startDate !== null) {
         const itemDate = new Date(item.date);
         const startDate = new Date(filters.startDate);
         startDate.setHours(0, 0, 0, 0);
-        
+
         if (itemDate < startDate) {
           return false;
         }
       }
-      
+
       if (filters.endDate !== null) {
         const itemDate = new Date(item.date);
         const endDate = new Date(filters.endDate);
         endDate.setHours(23, 59, 59, 999);
-        
+
         if (itemDate > endDate) {
           return false;
         }
       }
-      
+
       return true;
     });
   }, []);
@@ -124,64 +128,59 @@ const App = () => {
 
   const handleMonthChange = (newMonth: string) => {
     setCurrentMonth(newMonth);
-  }
+  };
 
   const handleAddItem = (item: Item) => {
     let newList = [...list];
     newList.push(item);
     setList(newList);
-    
+
     // Mostrar notificação de sucesso
     const isExpense = categories[item.category].expense;
-    success(
-      `${isExpense ? 'Despesa' : 'Receita'} "${item.title}" adicionada com sucesso!`,
-      3000
-    );
-  }
-  
+    success(`${isExpense ? 'Despesa' : 'Receita'} "${item.title}" adicionada com sucesso!`, 3000);
+  };
+
   const handleDeleteItem = (item: Item) => {
     // Encontrar o índice do item na lista
     const itemIndex = list.findIndex(
-      i => i.date.getTime() === item.date.getTime() && 
-           i.category === item.category && 
-           i.title === item.title && 
-           i.value === item.value
+      i =>
+        i.date.getTime() === item.date.getTime() &&
+        i.category === item.category &&
+        i.title === item.title &&
+        i.value === item.value
     );
-    
+
     if (itemIndex !== -1) {
       // Criar uma nova lista sem o item
       const newList = [...list];
       newList.splice(itemIndex, 1);
       setList(newList);
-      
+
       // Mostrar notificação de sucesso
       const isExpense = categories[item.category].expense;
-      success(
-        `${isExpense ? 'Despesa' : 'Receita'} "${item.title}" excluída com sucesso!`,
-        3000
-      );
+      success(`${isExpense ? 'Despesa' : 'Receita'} "${item.title}" excluída com sucesso!`, 3000);
     } else {
       // Mostrar notificação de erro
       error('Erro ao excluir item. Tente novamente.');
     }
-  }
+  };
 
   const handleFilterChange = (filters: FilterOptions) => {
     setActiveFilters(filters);
-    
+
     // Show notification when filters are applied
-    const hasActiveFilters = 
-      filters.searchText || 
-      filters.category || 
-      filters.minValue !== null || 
-      filters.maxValue !== null || 
-      filters.startDate !== null || 
+    const hasActiveFilters =
+      filters.searchText ||
+      filters.category ||
+      filters.minValue !== null ||
+      filters.maxValue !== null ||
+      filters.startDate !== null ||
       filters.endDate !== null;
-    
+
     if (hasActiveFilters) {
       info('Filtros aplicados às transações.', 2000);
     }
-  }
+  };
 
   return (
     <div className="container">
@@ -195,12 +194,12 @@ const App = () => {
       <div className="body">
         {/* Alertas Inteligentes */}
         <SmartAlerts />
-        
+
         {/* Resumo Financeiro Inteligente */}
         <FinancialSummary />
-        
-        <InfoArea 
-          currentMonth={currentMonth} 
+
+        <InfoArea
+          currentMonth={currentMonth}
           onMonthChange={handleMonthChange}
           income={income}
           expense={expense}
@@ -212,22 +211,14 @@ const App = () => {
         {/* Dicas Rápidas */}
         <QuickTips />
 
-        <ChartArea 
-          income={income}
-          expense={expense}
-          list={displayList}
-          categories={categories}
-        />
+        <ChartArea income={income} expense={expense} list={displayList} categories={categories} />
 
         <InputArea onAdd={handleAddItem} />
-        
+
         <FilterArea onFilterChange={handleFilterChange} />
-        
-        <ExportArea 
-          list={displayList} 
-          categories={categories}
-        />
-        
+
+        <ExportArea list={displayList} categories={categories} />
+
         {/* Seção de Criptomoedas */}
         <div className="web3-section">
           <div className="web3-section__header" onClick={() => setWeb3Expanded(!web3Expanded)}>
@@ -235,11 +226,31 @@ const App = () => {
               Ativos Cripto
               <span className="web3-section__toggle-icon">
                 {web3Expanded ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <polyline points="18 15 12 9 6 15"></polyline>
                   </svg>
                 ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
                     <polyline points="6 9 12 15 18 9"></polyline>
                   </svg>
                 )}
@@ -249,7 +260,7 @@ const App = () => {
               Conecte sua carteira para gerenciar seus ativos digitais
             </div>
           </div>
-          
+
           {web3Expanded && (
             <div className="web3-container">
               <div className="web3-left-column">
@@ -263,47 +274,33 @@ const App = () => {
             </div>
           )}
         </div>
-        
+
         {/* Seção de Recomendações IA */}
         <div className="ai-section">
           <div className="ai-section__header" onClick={() => setAiExpanded(!aiExpanded)}>
             <div className="ai-section__title">
-              Recomendações Inteligentes
-              <span className="ai-section__toggle-icon">
-                {aiExpanded ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="18 15 12 9 6 15"></polyline>
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="6 9 12 15 18 9"></polyline>
-                  </svg>
-                )}
+              <span>
+                💡 Recomendações Inteligentes
               </span>
             </div>
             <div className="ai-section__subtitle">
               Dicas personalizadas para melhorar suas finanças
             </div>
           </div>
-          
-          {aiExpanded && (
-            <RecommendationsList />
-          )}
+
+          {aiExpanded && <RecommendationsList />}
         </div>
-        
+
         {/* Botão flutuante de IA */}
         <AiAdvisorButton />
 
-        <TableArea 
-          list={displayList} 
-          onDeleteItem={handleDeleteItem} 
-        />
+        <TableArea list={displayList} onDeleteItem={handleDeleteItem} />
       </div>
-      
+
       <Footer />
       <NotificationContainer />
     </div>
   );
-}
+};
 
 export default App;

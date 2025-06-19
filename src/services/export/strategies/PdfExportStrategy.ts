@@ -4,19 +4,18 @@ export class PdfExportStrategy implements ExportStrategy {
   async export(data: ExportData): Promise<void> {
     try {
       const html = this.generateHtml(data);
-      
+
       const newWindow = window.open('', '_blank');
       if (newWindow) {
         newWindow.document.write(html);
         newWindow.document.close();
-        
+
         setTimeout(() => {
           newWindow.print();
         }, 500);
       } else {
         throw new Error('Pop-ups bloqueados');
       }
-      
     } catch (error) {
       console.error('Error exporting PDF:', error);
       throw new Error('Erro ao exportar PDF');
@@ -78,7 +77,7 @@ export class PdfExportStrategy implements ExportStrategy {
     `;
 
     const tableHeaders = data.data.length > 0 ? Object.keys(data.data[0]) : [];
-    
+
     let html = `
       <!DOCTYPE html>
       <html lang="pt-BR">

@@ -15,7 +15,7 @@ export class ExportService {
 
   async export(options: ExportOptions): Promise<void> {
     const strategy = this.strategies.get(options.format);
-    
+
     if (!strategy) {
       throw new Error(`Formato de exportação não suportado: ${options.format}`);
     }
@@ -26,7 +26,7 @@ export class ExportService {
     await strategy.export({
       data: options.data,
       filename,
-      title
+      title,
     });
   }
 
@@ -35,9 +35,9 @@ export class ExportService {
     const typeMap = {
       transactions: 'transacoes',
       crypto: 'ativos_cripto',
-      recommendations: 'recomendacoes'
+      recommendations: 'recomendacoes',
     };
-    
+
     const typeName = typeMap[options.type] || options.type;
     return `${typeName}_${date}.${options.format}`;
   }
@@ -46,9 +46,9 @@ export class ExportService {
     const titleMap = {
       transactions: 'BitBudget - Relatório de Transações',
       crypto: 'BitBudget - Relatório de Ativos Cripto',
-      recommendations: 'BitBudget - Relatório de Recomendações'
+      recommendations: 'BitBudget - Relatório de Recomendações',
     };
-    
+
     return titleMap[type as keyof typeof titleMap] || 'BitBudget - Relatório';
   }
 }

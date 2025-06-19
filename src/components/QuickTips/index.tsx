@@ -16,76 +16,86 @@ const tips: QuickTip[] = [
     id: 'emergency-fund',
     icon: '🏦',
     title: 'Fundo de Emergência',
-    description: 'Mantenha 3-6 meses de despesas guardados para emergências. Comece poupando R$ 50 por semana.',
+    description:
+      'Mantenha 3-6 meses de despesas guardados para emergências. Comece poupando R$ 50 por semana.',
     category: 'saving',
-    actionable: true
+    actionable: true,
   },
   {
     id: '50-30-20-rule',
     icon: '📊',
     title: 'Regra 50/30/20',
-    description: '50% para necessidades, 30% para desejos, 20% para poupança. Uma fórmula simples para organizar o orçamento.',
-    category: 'budgeting'
+    description:
+      '50% para necessidades, 30% para desejos, 20% para poupança. Uma fórmula simples para organizar o orçamento.',
+    category: 'budgeting',
   },
   {
     id: 'track-small-expenses',
     icon: '☕',
     title: 'Pequenos Gastos',
-    description: 'Aquele cafezinho de R$ 5 por dia representa R$ 1.825 por ano. Pequenas economias fazem grande diferença.',
-    category: 'saving'
+    description:
+      'Aquele cafezinho de R$ 5 por dia representa R$ 1.825 por ano. Pequenas economias fazem grande diferença.',
+    category: 'saving',
   },
   {
     id: 'compound-interest',
     icon: '📈',
     title: 'Juros Compostos',
-    description: 'Começar a investir R$ 100/mês aos 25 anos pode resultar em R$ 300mil aos 65 anos (8% a.a.).',
-    category: 'investing'
+    description:
+      'Começar a investir R$ 100/mês aos 25 anos pode resultar em R$ 300mil aos 65 anos (8% a.a.).',
+    category: 'investing',
   },
   {
     id: 'automated-savings',
     icon: '🤖',
     title: 'Poupança Automática',
-    description: 'Configure transferências automáticas no dia do salário. "Pague a si mesmo primeiro".',
+    description:
+      'Configure transferências automáticas no dia do salário. "Pague a si mesmo primeiro".',
     category: 'saving',
-    actionable: true
+    actionable: true,
   },
   {
     id: 'debt-avalanche',
     icon: '❄️',
     title: 'Método Avalanche',
-    description: 'Quite primeiro as dívidas com maiores juros. Mantenha pagamentos mínimos nas outras.',
-    category: 'budgeting'
+    description:
+      'Quite primeiro as dívidas com maiores juros. Mantenha pagamentos mínimos nas outras.',
+    category: 'budgeting',
   },
   {
     id: 'price-comparison',
     icon: '🔍',
     title: 'Compare Preços',
-    description: 'Use apps de comparação antes de compras grandes. 10 minutos podem economizar centenas de reais.',
+    description:
+      'Use apps de comparação antes de compras grandes. 10 minutos podem economizar centenas de reais.',
     category: 'general',
-    actionable: true
+    actionable: true,
   },
   {
     id: 'review-subscriptions',
     icon: '📱',
     title: 'Revise Assinaturas',
-    description: 'Cancele serviços que você não usa. A média das pessoas paga por 3+ assinaturas que esqueceram.',
+    description:
+      'Cancele serviços que você não usa. A média das pessoas paga por 3+ assinaturas que esqueceram.',
     category: 'budgeting',
-    actionable: true
+    actionable: true,
   },
   {
     id: 'investment-apps',
     icon: '📲',
     title: 'Apps de Investimento',
-    description: 'Use aplicativos que arredondam compras e investem o "troco". Invista sem sentir no bolso.',
-    category: 'investing'
+    description:
+      'Use aplicativos que arredondam compras e investem o "troco". Invista sem sentir no bolso.',
+    category: 'investing',
   },
   {
     id: 'financial-education',
     icon: '📚',
     title: 'Educação Financeira',
-    description: 'Dedique 15 minutos por semana lendo sobre finanças. Conhecimento é o melhor investimento.',
-    category: 'general'
-  }
+    description:
+      'Dedique 15 minutos por semana lendo sobre finanças. Conhecimento é o melhor investimento.',
+    category: 'general',
+  },
 ];
 
 export const QuickTips: React.FC = () => {
@@ -113,21 +123,31 @@ export const QuickTips: React.FC = () => {
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case 'saving': return '#28a745';
-      case 'budgeting': return '#ffc107';
-      case 'investing': return '#17a2b8';
-      case 'general': return '#6f42c1';
-      default: return '#6c757d';
+      case 'saving':
+        return '#28a745';
+      case 'budgeting':
+        return '#ffc107';
+      case 'investing':
+        return '#17a2b8';
+      case 'general':
+        return '#6f42c1';
+      default:
+        return '#6c757d';
     }
   };
 
   const getCategoryLabel = (category: string) => {
     switch (category) {
-      case 'saving': return 'Economia';
-      case 'budgeting': return 'Orçamento';
-      case 'investing': return 'Investimento';
-      case 'general': return 'Geral';
-      default: return 'Dica';
+      case 'saving':
+        return 'Economia';
+      case 'budgeting':
+        return 'Orçamento';
+      case 'investing':
+        return 'Investimento';
+      case 'general':
+        return 'Geral';
+      default:
+        return 'Dica';
     }
   };
 
@@ -143,7 +163,7 @@ export const QuickTips: React.FC = () => {
             <span>{currentTip.icon}</span>
           </div>
           <div className="quick-tip__meta">
-            <span 
+            <span
               className="quick-tip__category"
               style={{ color: getCategoryColor(currentTip.category) }}
             >
@@ -152,42 +172,34 @@ export const QuickTips: React.FC = () => {
             <h4 className="quick-tip__title">{currentTip.title}</h4>
           </div>
           <div className="quick-tip__actions">
-            <button 
-              className="quick-tip__next"
-              onClick={getNextTip}
-              title="Próxima dica"
-            >
+            <button className="quick-tip__next" onClick={getNextTip} title="Próxima dica">
               ↻
             </button>
-            <button 
-              className="quick-tip__dismiss"
-              onClick={dismissTip}
-              title="Dispensar"
-            >
+            <button className="quick-tip__dismiss" onClick={dismissTip} title="Dispensar">
               ×
             </button>
           </div>
         </div>
-        
+
         <div className="quick-tip__content">
           <p className="quick-tip__description">{currentTip.description}</p>
-          
+
           {currentTip.actionable && (
             <div className="quick-tip__cta">
               <span className="quick-tip__cta-text">💡 Ação recomendada</span>
             </div>
           )}
         </div>
-        
+
         <div className="quick-tip__footer">
           <span className="quick-tip__label">Dica do Dia</span>
           <div className="quick-tip__progress">
             <div className="quick-tip__progress-bar">
-              <div 
+              <div
                 className="quick-tip__progress-fill"
-                style={{ 
+                style={{
                   width: `${((tips.findIndex(t => t.id === currentTip.id) + 1) / tips.length) * 100}%`,
-                  backgroundColor: getCategoryColor(currentTip.category)
+                  backgroundColor: getCategoryColor(currentTip.category),
                 }}
               />
             </div>

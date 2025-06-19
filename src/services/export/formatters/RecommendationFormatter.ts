@@ -15,7 +15,7 @@ export class RecommendationFormatter {
       Tipo: this.getTypeLabel(rec.type),
       Conteúdo: rec.content,
       'Data de Criação': new Date(rec.createdAt).toLocaleString('pt-BR'),
-      Lida: rec.isRead ? 'Sim' : 'Não'
+      Lida: rec.isRead ? 'Sim' : 'Não',
     }));
   }
 
@@ -24,9 +24,9 @@ export class RecommendationFormatter {
       SAVING: 'Economia',
       INVESTMENT: 'Investimento',
       BUDGET: 'Orçamento',
-      GENERAL: 'Geral'
+      GENERAL: 'Geral',
     };
-    
+
     return typeMap[type as keyof typeof typeMap] || type;
   }
 }

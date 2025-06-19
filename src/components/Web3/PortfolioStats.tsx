@@ -7,7 +7,7 @@ export const PortfolioStats: React.FC = () => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 2
+      maximumFractionDigits: 2,
     }).format(value);
   };
 
@@ -21,19 +21,21 @@ export const PortfolioStats: React.FC = () => {
       <div className="stats-header">
         <h3>💼 Visão Geral do Portfólio</h3>
       </div>
-      
+
       <div className="stats-grid">
         <div className="stat-card total-value">
           <div className="stat-icon">💰</div>
           <div className="stat-content">
             <div className="stat-label">Valor Total</div>
             <div className="stat-value">{formatCurrency(mockPortfolioStats.totalValue)}</div>
-            <div className={`stat-change ${mockPortfolioStats.change24h >= 0 ? 'positive' : 'negative'}`}>
+            <div
+              className={`stat-change ${mockPortfolioStats.change24h >= 0 ? 'positive' : 'negative'}`}
+            >
               {formatChange(mockPortfolioStats.change24h)} 24h
             </div>
           </div>
         </div>
-        
+
         <div className="stat-card assets-count">
           <div className="stat-icon">📊</div>
           <div className="stat-content">
@@ -42,7 +44,7 @@ export const PortfolioStats: React.FC = () => {
             <div className="stat-change neutral">Diversificado</div>
           </div>
         </div>
-        
+
         <div className="stat-card top-gainer">
           <div className="stat-icon">📈</div>
           <div className="stat-content">
@@ -51,7 +53,7 @@ export const PortfolioStats: React.FC = () => {
             <div className="stat-change positive">Melhor performer</div>
           </div>
         </div>
-        
+
         <div className="stat-card top-loser">
           <div className="stat-icon">📉</div>
           <div className="stat-content">

@@ -9,14 +9,14 @@ vi.mock('./components/NotificationManager', () => ({
     success: vi.fn(),
     info: vi.fn(),
     addNotification: vi.fn(),
-    NotificationContainer: () => null
-  })
+    NotificationContainer: () => null,
+  }),
 }));
 
 // Mock Chart.js
 vi.mock('react-chartjs-2', () => ({
   Bar: () => <div data-testid="bar-chart">Bar Chart</div>,
-  Pie: () => <div data-testid="pie-chart">Pie Chart</div>
+  Pie: () => <div data-testid="pie-chart">Pie Chart</div>,
 }));
 
 describe('App', () => {
@@ -28,7 +28,7 @@ describe('App', () => {
 
   it('renders all main components', () => {
     render(<App />);
-    
+
     // Check for main components
     expect(screen.getByText('BitBudget')).toBeInTheDocument();
     expect(screen.getByText('Análise Financeira')).toBeInTheDocument();
@@ -39,27 +39,27 @@ describe('App', () => {
 
   it('shows and hides filters when toggle button is clicked', () => {
     render(<App />);
-    
+
     // Initially, filter fields should not be visible
     expect(screen.queryByText('Buscar por texto')).not.toBeInTheDocument();
-    
+
     // Click the toggle button
     fireEvent.click(screen.getByText('Mostrar Filtros'));
-    
+
     // Filter fields should now be visible
     expect(screen.getByText('Buscar por texto')).toBeInTheDocument();
     expect(screen.getAllByText('Categoria')[1]).toBeInTheDocument(); // First one is in the InputArea
-    
+
     // Click the toggle button again
     fireEvent.click(screen.getByText('Ocultar Filtros'));
-    
+
     // Filter fields should be hidden again
     expect(screen.queryByText('Buscar por texto')).not.toBeInTheDocument();
   });
-  
+
   it('renders the export area', () => {
     render(<App />);
-    
+
     expect(screen.getByText('Exportar Dados')).toBeInTheDocument();
     expect(screen.getByText(/Exportar \d+ Transações/)).toBeInTheDocument();
   });

@@ -9,9 +9,7 @@ export const AppProviders: React.FC<{ children: React.ReactNode }> = ({ children
     <NotificationProvider>
       <AuthProvider>
         <Web3Provider>
-          <AiProvider>
-            {children}
-          </AiProvider>
+          <AiProvider>{children}</AiProvider>
         </Web3Provider>
       </AuthProvider>
     </NotificationProvider>

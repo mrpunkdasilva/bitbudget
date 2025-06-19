@@ -12,5 +12,5 @@ export const categories: Record<string, Category> = {
   investment: { title: 'Investimento', color: '#009688', expense: false },
   other: { title: 'Outros', color: '#607D8B', expense: true },
   freelance: { title: 'Freelance', color: '#8BC34A', expense: false },
-  gift: { title: 'Presente', color: '#FF9800', expense: false }
+  gift: { title: 'Presente', color: '#FF9800', expense: false },
 };

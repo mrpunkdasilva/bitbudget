@@ -1,32 +1,53 @@
 import React from 'react';
 import { useAi } from '../../contexts/AiContext';
+import './styles.scss';
 
 export const RecommendationsList: React.FC = () => {
-  const { recommendations, isLoading, isGenerating, generateRecommendation, markAsRead } = useAi();
+  const { 
+    recommendations, 
+    isLoading, 
+    isGenerating, 
+    generateRecommendation, 
+    markAsRead 
+  } = useAi();
 
   // Format date to a readable string
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString();
+    return date.toLocaleDateString('pt-BR');
   };
 
-  // Get badge color based on recommendation type
-  const getBadgeColor = (type: string) => {
-    switch (type) {
+  // Get recommendation type class
+  const getRecommendationTypeClass = (type: string) => {
+    switch (type.toUpperCase()) {
       case 'SAVING':
-        return 'badge-success';
+        return 'recommendation-card--saving';
       case 'INVESTMENT':
-        return 'badge-primary';
+        return 'recommendation-card--investment';
       case 'BUDGET':
-        return 'badge-warning';
+        return 'recommendation-card--budget';
       default:
-        return 'badge-info';
+        return 'recommendation-card--general';
+    }
+  };
+
+  // Get badge class based on recommendation type
+  const getBadgeClass = (type: string) => {
+    switch (type.toUpperCase()) {
+      case 'SAVING':
+        return 'recommendation-card__badge--saving';
+      case 'INVESTMENT':
+        return 'recommendation-card__badge--investment';
+      case 'BUDGET':
+        return 'recommendation-card__badge--budget';
+      default:
+        return 'recommendation-card__badge--general';
     }
   };
 
   // Get badge text based on recommendation type
   const getBadgeText = (type: string) => {
-    switch (type) {
+    switch (type.toUpperCase()) {
       case 'SAVING':
         return 'Economia';
       case 'INVESTMENT':
@@ -39,55 +60,68 @@ export const RecommendationsList: React.FC = () => {
   };
 
   return (
-    <div className="recommendations-list">
-      <div className="recommendations-header">
-        <h3>Recomendações Financeiras</h3>
-        <button 
-          className="btn btn-primary" 
-          onClick={generateRecommendation} 
-          disabled={isGenerating}
-        >
-          {isGenerating ? 'Gerando...' : 'Nova Recomendação'}
-        </button>
+    <div className="recommendations">
+      <div className="recommendations__header">
+        <h3>Recomendações Inteligentes</h3>
+        <p>Conselhos personalizados para melhorar sua saúde financeira</p>
       </div>
       
       {isLoading ? (
-        <div className="loading">Carregando recomendações...</div>
+        <div className="recommendations__loading">
+          <div className="loading-spinner"></div>
+        </div>
       ) : recommendations.length === 0 ? (
-        <div className="recommendations-empty">
-          <p>Nenhuma recomendação disponível. Clique em "Nova Recomendação" para gerar conselhos financeiros personalizados.</p>
+        <div className="recommendations__empty">
+          <span className="empty-icon">💡</span>
+          <p>
+            Nenhuma recomendação disponível. Clique em "Nova Recomendação" para gerar conselhos
+            financeiros personalizados.
+          </p>
         </div>
       ) : (
-        <div className="recommendations-grid">
+        <div className="recommendations__grid">
           {recommendations.map(recommendation => (
-            <div 
-              key={recommendation.id} 
-              className={`recommendation-card ${recommendation.isRead ? 'read' : 'unread'}`}
+            <div
+              key={recommendation.id}
+              className={`recommendation-card ${getRecommendationTypeClass(recommendation.type)} ${
+                recommendation.isRead ? 'read' : 'unread'
+              }`}
               onClick={() => !recommendation.isRead && markAsRead(recommendation.id)}
             >
-              <div className="recommendation-header">
-                <h4>{recommendation.title}</h4>
-                <span className={`badge ${getBadgeColor(recommendation.type)}`}>
+              <div className="recommendation-card__header">
+                <h4 className="recommendation-card__title">{recommendation.title}</h4>
+                <span className={`recommendation-card__badge ${getBadgeClass(recommendation.type)}`}>
                   {getBadgeText(recommendation.type)}
                 </span>
               </div>
-              
-              <div className="recommendation-content">
-                {recommendation.content.split('\n\n').map((paragraph, index) => (
-                  <p key={index}>{paragraph}</p>
-                ))}
-              </div>
-              
-              <div className="recommendation-footer">
-                <span className="date">{formatDate(recommendation.createdAt)}</span>
-                {!recommendation.isRead && (
-                  <span className="unread-badge">Novo</span>
-                )}
+              <p className="recommendation-card__description">{recommendation.description}</p>
+              <div className="recommendation-card__footer">
+                <div className="recommendation-card__date">
+                  <span>📅</span> {formatDate(recommendation.createdAt)}
+                </div>
+                <div className="recommendation-card__actions">
+                  <button className="recommendation-card__button">Ignorar</button>
+                  <button className="recommendation-card__button recommendation-card__button--primary">
+                    Aplicar
+                  </button>
+                </div>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      <div className="recommendations__actions">
+        <button onClick={generateRecommendation} disabled={isGenerating}>
+          {isGenerating ? (
+            <>Gerando... <div className="loading-spinner"></div></>
+          ) : (
+            <>
+              <span>✨</span> Nova Recomendação
+            </>
+          )}
+        </button>
+      </div>
     </div>
   );
 };

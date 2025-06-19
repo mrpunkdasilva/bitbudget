@@ -12,19 +12,19 @@ export interface FormattedTransaction {
 
 export class TransactionFormatter {
   static format(
-    transactions: Item[], 
+    transactions: Item[],
     categories: Record<string, Category>
   ): FormattedTransaction[] {
     return transactions.map(transaction => ({
       Data: formatDate(transaction.date),
       Categoria: this.getCategoryName(transaction.category, categories),
       Título: transaction.title,
-      Valor: formatCurrency(transaction.value)
+      Valor: formatCurrency(transaction.value),
     }));
   }
 
   private static getCategoryName(
-    categoryKey: string, 
+    categoryKey: string,
     categories: Record<string, Category>
   ): string {
     const category = categories[categoryKey];

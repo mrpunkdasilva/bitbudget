@@ -21,7 +21,7 @@ export const useExport = ({
   transactions = [],
   categories = {},
   assets = [],
-  recommendations = []
+  recommendations = [],
 }: UseExportProps = {}) => {
   const [isExporting, setIsExporting] = useState(false);
   const { success, error } = useNotification();
@@ -30,9 +30,9 @@ export const useExport = ({
   const exportData = async (format: ExportFormat, type: ExportType) => {
     try {
       setIsExporting(true);
-      
+
       let formattedData: any[] = [];
-      
+
       switch (type) {
         case 'transactions':
           formattedData = TransactionFormatter.format(transactions, categories);
@@ -50,7 +50,7 @@ export const useExport = ({
       await exportService.export({
         format,
         type,
-        data: formattedData
+        data: formattedData,
       });
 
       success(`${type} exportado com sucesso!`);
@@ -64,6 +64,6 @@ export const useExport = ({
 
   return {
     exportData,
-    isExporting
+    isExporting,
   };
 };

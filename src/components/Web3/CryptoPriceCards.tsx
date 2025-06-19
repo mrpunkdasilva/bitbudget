@@ -7,7 +7,7 @@ export const CryptoPriceCards: React.FC = () => {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
-      maximumFractionDigits: price < 1 ? 4 : 2
+      maximumFractionDigits: price < 1 ? 4 : 2,
     }).format(price);
   };
 

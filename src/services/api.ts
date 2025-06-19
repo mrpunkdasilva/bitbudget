@@ -28,7 +28,10 @@ export const authAPI = {
     return handleResponse(response);
   },
 
-  login: async (email: string, password: string): Promise<{ id: string; name: string; email: string; token: string }> => {
+  login: async (
+    email: string,
+    password: string
+  ): Promise<{ id: string; name: string; email: string; token: string }> => {
     const response = await fetch(`${API_URL}/auth/login`, {
       method: 'POST',
       headers: {
@@ -123,7 +126,11 @@ export const categoryAPI = {
     return handleResponse(response);
   },
 
-  updateCategory: async (token: string, id: string, category: Partial<Category>): Promise<Category> => {
+  updateCategory: async (
+    token: string,
+    id: string,
+    category: Partial<Category>
+  ): Promise<Category> => {
     const response = await fetch(`${API_URL}/categories/${id}`, {
       method: 'PUT',
       headers: {
@@ -148,18 +155,23 @@ export const categoryAPI = {
 
 // Transaction API
 export const transactionAPI = {
-  getTransactions: async (token: string, month?: number, year?: number, type?: string): Promise<Item[]> => {
+  getTransactions: async (
+    token: string,
+    month?: number,
+    year?: number,
+    type?: string
+  ): Promise<Item[]> => {
     let url = `${API_URL}/expenses`;
     const params = new URLSearchParams();
-    
+
     if (month) params.append('month', month.toString());
     if (year) params.append('year', year.toString());
     if (type) params.append('type', type);
-    
+
     if (params.toString()) {
       url += `?${params.toString()}`;
     }
-    
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -189,7 +201,11 @@ export const transactionAPI = {
     return handleResponse(response);
   },
 
-  updateTransaction: async (token: string, id: string, transaction: Partial<Item>): Promise<Item> => {
+  updateTransaction: async (
+    token: string,
+    id: string,
+    transaction: Partial<Item>
+  ): Promise<Item> => {
     const response = await fetch(`${API_URL}/expenses/${id}`, {
       method: 'PUT',
       headers: {
@@ -213,11 +229,11 @@ export const transactionAPI = {
 
   getTransactionSummary: async (token: string, year?: number): Promise<any[]> => {
     let url = `${API_URL}/expenses/summary`;
-    
+
     if (year) {
       url += `?year=${year}`;
     }
-    
+
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -229,7 +245,10 @@ export const transactionAPI = {
 
 // Web3 API
 export const web3API = {
-  connectWallet: async (token: string, walletAddress: string): Promise<{ message: string; walletAddress: string }> => {
+  connectWallet: async (
+    token: string,
+    walletAddress: string
+  ): Promise<{ message: string; walletAddress: string }> => {
     const response = await fetch(`${API_URL}/web3/connect-wallet`, {
       method: 'POST',
       headers: {
