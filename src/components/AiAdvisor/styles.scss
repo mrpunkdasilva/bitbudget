@@ -1,8 +1,10 @@
 .recommendations {
   margin: 2rem 0;
+  padding: 0 1rem;
+  max-width: 100%;
   
   &__header {
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     text-align: center;
     
     h3 {
@@ -41,6 +43,8 @@
     background: var(--card-bg);
     border-radius: 12px;
     border: 1px solid var(--border-color);
+    margin: 0 auto;
+    max-width: 600px;
     
     .empty-icon {
       font-size: 3rem;
@@ -58,19 +62,26 @@
   
   &__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
     
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
-      gap: 1rem;
+      gap: 1.5rem;
+      padding: 0;
     }
   }
   
   &__actions {
     display: flex;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
     
     button {
       background: linear-gradient(135deg, #00cc88, #00a676);
@@ -120,89 +131,77 @@
 
 .recommendation-card {
   background: var(--card-bg);
-  border-radius: 12px;
+  border-radius: 10px;
   padding: 1.5rem;
   border: 1px solid var(--border-color);
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   position: relative;
-  overflow: hidden;
-  height: 100%;
+  overflow: visible;
+  height: auto;
+  min-height: 220px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  width: 100%;
   
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
   }
   
+  // Barra colorida no topo
   &::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 3px;
     background: var(--recommendation-color, #00cc88);
   }
   
+  // Variantes de cores por tipo
   &--saving {
     --recommendation-color: #28a745;
-    
-    &:hover {
-      border-color: rgba(40, 167, 69, 0.3);
-      box-shadow: 0 8px 25px rgba(40, 167, 69, 0.15);
-    }
   }
   
   &--investment {
     --recommendation-color: #9d4edd;
-    
-    &:hover {
-      border-color: rgba(157, 78, 221, 0.3);
-      box-shadow: 0 8px 25px rgba(157, 78, 221, 0.15);
-    }
   }
   
   &--budget {
     --recommendation-color: #ffc107;
-    
-    &:hover {
-      border-color: rgba(255, 193, 7, 0.3);
-      box-shadow: 0 8px 25px rgba(255, 193, 7, 0.15);
-    }
   }
   
   &--general {
     --recommendation-color: #17a2b8;
-    
-    &:hover {
-      border-color: rgba(23, 162, 184, 0.3);
-      box-shadow: 0 8px 25px rgba(23, 162, 184, 0.15);
-    }
   }
   
+  // Cabeçalho do card
   &__header {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
-    gap: 1rem;
+    gap: 0.75rem;
   }
   
+  // Título da recomendação
   &__title {
     color: var(--text-primary);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 600;
     margin: 0;
     line-height: 1.3;
     flex: 1;
   }
   
+  // Badge de categoria
   &__badge {
     display: inline-block;
-    padding: 0.25rem 0.75rem;
+    padding: 0.2rem 0.6rem;
     border-radius: 20px;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -229,47 +228,53 @@
     }
   }
   
+  // Descrição da recomendação
   &__description {
     color: var(--text-secondary);
     font-size: 0.9rem;
-    margin: 0 0 1.5rem 0;
+    margin: 0 0 1.25rem 0;
     line-height: 1.5;
     flex: 1;
+    overflow-wrap: break-word;
   }
   
+  // Rodapé do card
   &__footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid var(--border-color);
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
     font-size: 0.8rem;
     color: var(--text-muted);
     margin-top: auto;
   }
   
+  // Data da recomendação
   &__date {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.4rem;
     
     span {
-      font-size: 1rem;
+      font-size: 0.9rem;
     }
   }
   
+  // Área de ações
   &__actions {
     display: flex;
     gap: 0.5rem;
   }
   
+  // Botões de ação
   &__button {
     background: transparent;
     border: 1px solid var(--recommendation-color, #00cc88);
     color: var(--recommendation-color, #00cc88);
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
-    font-size: 0.8rem;
+    padding: 0.35rem 0.7rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -289,23 +294,25 @@
     }
   }
   
+  // Indicador de não lido
   &.unread {
     position: relative;
     
     &::after {
       content: '';
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      width: 8px;
-      height: 8px;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 6px;
+      height: 6px;
       background-color: var(--recommendation-color, #00cc88);
       border-radius: 50%;
     }
   }
   
+  // Estado de lido
   &.read {
-    opacity: 0.8;
+    opacity: 0.85;
   }
 }
 
@@ -314,10 +321,146 @@
   100% { transform: rotate(360deg); }
 }
 
-// Ajustes responsivos
+// Melhorias no grid de recomendações
+.recommendations__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  
+  @media (max-width: 1400px) {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+  
+  @media (max-width: 992px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+// Ajustes para a seção de IA
+.ai-section {
+  margin: 2rem 0;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: visible; // Alterado de hidden para visible
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  
+  &__header {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(0, 204, 136, 0.05);
+    }
+  }
+  
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  &__subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  
+  // Adicionar padding interno quando expandido
+  &__content {
+    padding: 0 2rem 2rem;
+    
+    @media (max-width: 768px) {
+      padding: 0 1.25rem 1.5rem;
+    }
+    
+    @media (max-width: 480px) {
+      padding: 0 1rem 1.25rem;
+    }
+  }
+}
+
+// Botão flutuante de IA
+.ai-advisor-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00cc88, #00a676);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 204, 136, 0.5);
+  border: none;
+  z-index: 1000;
+  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 204, 136, 0.6);
+  }
+  
+  .unread-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4757;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(255, 71, 87, 0.5);
+  }
+}
+
+// Ajustes responsivos melhorados
 @media (max-width: 768px) {
   .recommendation-card {
     padding: 1.25rem;
+    
+    &__footer {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    
+    &__actions {
+      margin-left: auto;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendation-card {
+    padding: 1rem;
     
     &__header {
       flex-direction: column;
@@ -332,53 +475,15 @@
     &__footer {
       flex-direction: column;
       align-items: flex-start;
-      gap: 1rem;
+      gap: 0.75rem;
     }
     
     &__actions {
       width: 100%;
+      display: flex;
       justify-content: space-between;
+      margin-left: 0;
     }
-  }
-  
-  .recommendations__grid {
-    padding: 0 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .recommendation-card {
-    padding: 1rem;
-    
-    &__title {
-      font-size: 1rem;
-    }
-    
-    &__description {
-      font-size: 0.85rem;
-      margin-bottom: 1rem;
-    }
-    
-    &__button {
-      padding: 0.35rem 0.7rem;
-      font-size: 0.75rem;
-    }
-  }
-  
-  .ai-section__title {
-    font-size: 1.1rem;
-  }
-  
-  .ai-section__subtitle {
-    font-size: 0.8rem;
-  }
-  
-  .recommendations__header h3 {
-    font-size: 1.5rem;
-  }
-  
-  .recommendations__header p {
-    font-size: 0.85rem;
   }
 }
 
@@ -426,7 +531,52 @@
   }
 }
 
-// Estilos para o botão flutuante de IA
+// Melhorias na seção de IA
+.ai-section {
+  margin: 2rem 0;
+  background: var(--card-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+  
+  &__header {
+    padding: 1.5rem 2rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(0, 204, 136, 0.05);
+    }
+  }
+  
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
+  
+  &__subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  
+  // Adicionar padding interno quando expandido
+  &__content {
+    padding: 0 2rem 2rem;
+  }
+}
+
+// Botão flutuante de IA
 .ai-advisor-button {
   position: fixed;
   bottom: 20px;
@@ -466,44 +616,5 @@
     font-size: 12px;
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(255, 71, 87, 0.5);
-  }
-}
-
-// Estilos para a seção de IA no App.tsx
-.ai-section {
-  margin: 2rem 0;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  
-  &__header {
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-      background-color: rgba(0, 204, 136, 0.05);
-    }
-  }
-  
-  &__title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    
-    span {
-      display: flex;
-      align-items: center;
-    }
-  }
-  
-  &__subtitle {
-    color: var(--text-muted);
-    font-size: 0.9rem;
   }
 }
