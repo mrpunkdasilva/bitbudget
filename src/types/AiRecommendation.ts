@@ -1,5 +1,6 @@
 export interface AiRecommendation {
   id: string;
+  userId: string;
   title: string;
   description?: string;
   content?: string;

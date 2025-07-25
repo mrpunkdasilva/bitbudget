@@ -132,7 +132,7 @@ export const generatePdfPreview = async (
         margin: { top: 40 },
       });
       console.log('Tabela adicionada com sucesso');
-    } catch (tableError) {
+    } catch (tableError: any) {
       console.error('Erro ao adicionar tabela:', tableError);
       throw new Error(`Falha ao adicionar tabela ao PDF: ${tableError.message}`);
     }
@@ -149,7 +149,7 @@ export const generatePdfPreview = async (
       console.log('URL do PDF criada com sucesso:', pdfDataUri.substring(0, 30) + '...');
 
       return { pdfDoc, pdfDataUri };
-    } catch (outputError) {
+    } catch (outputError: any) {
       console.error('Erro ao gerar saída do PDF:', outputError);
       throw new Error(`Falha ao gerar saída do PDF: ${outputError.message}`);
     }

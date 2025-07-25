@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { transactionAPI } from '../../services/api';
 import { Item } from '../../types/Item';
+import { categories } from '../../data/categories';
 import './styles.scss';
 
 interface InsightCardProps {
@@ -91,16 +92,16 @@ export const SmartInsights: React.FC = () => {
 
     // Calculate totals
     const currentExpenses = currentTransactions
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+      .filter(t => categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const lastExpenses = lastMonthTransactions
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+      .filter(t => categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const currentIncome = currentTransactions
-      .filter(t => !t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount.toString()), 0);
+      .filter(t => !categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     // Monthly spending comparison
     if (lastExpenses > 0) {
@@ -130,18 +131,20 @@ export const SmartInsights: React.FC = () => {
     }
 
     // Category analysis
-    const categoryTotals: { [key: string]: { total: number; title: string; isExpense: boolean } } =
-      {};
+    const categoryTotals: { [key: string]: { total: number; title: string; isExpense: boolean } } = {};
     currentTransactions.forEach(transaction => {
-      const categoryName = transaction.category.name;
-      if (!categoryTotals[categoryName]) {
-        categoryTotals[categoryName] = {
-          total: 0,
-          title: transaction.category.title,
-          isExpense: transaction.category.isExpense,
-        };
+      const categoryData = categories[transaction.category];
+      if (categoryData) {
+        const categoryName = transaction.category;
+        if (!categoryTotals[categoryName]) {
+          categoryTotals[categoryName] = {
+            total: 0,
+            title: categoryData.title,
+            isExpense: categoryData.expense,
+          };
+        }
+        categoryTotals[categoryName].total += transaction.value;
       }
-      categoryTotals[categoryName].total += parseFloat(transaction.amount.toString());
     });
 
     // Find biggest expense category

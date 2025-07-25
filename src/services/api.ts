@@ -4,7 +4,7 @@ import { User } from '../types/User';
 import { Web3Asset } from '../types/Web3Asset';
 import { AiRecommendation } from '../types/AiRecommendation';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+export const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 // Helper function to handle API responses
 const handleResponse = async (response: Response) => {

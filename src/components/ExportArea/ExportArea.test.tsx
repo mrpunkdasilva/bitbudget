@@ -42,9 +42,14 @@ describe('ExportArea Component', () => {
   };
 
   beforeEach(() => {
-    vi.spyOn(document, 'createElement').mockImplementation(() => mockLink as any);
-    vi.spyOn(document.body, 'appendChild').mockImplementation(() => {});
-    vi.spyOn(document.body, 'removeChild').mockImplementation(() => {});
+    vi.spyOn(document, 'createElement').mockImplementation(tagName => {
+      if (tagName === 'a') {
+        return mockLink as any;
+      }
+      return document.createElement(tagName);
+    });
+    vi.spyOn(document.body, 'appendChild').mockImplementation(node => node);
+    vi.spyOn(document.body, 'removeChild').mockImplementation(node => node);
   });
 
   it('renders the export area with title', () => {

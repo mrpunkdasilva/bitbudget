@@ -1,6 +1,6 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import { AiRecommendation } from '../types/AiRecommendation';
-import { aiAPI } from '../services/api';
+import { aiAPI } from '../services/aiAPI';
 import { useAuth } from './AuthContext';
 import { useNotification } from '../components/NotificationManager';
 import { mockRecommendations, generateMockRecommendation } from '../data/mockAiData';

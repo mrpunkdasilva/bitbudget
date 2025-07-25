@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { transactionAPI } from '../../services/api';
 import { Item } from '../../types/Item';
+import { categories } from '../../data/categories';
 import './styles.scss';
 
 interface SummaryMetric {
@@ -84,24 +85,24 @@ export const FinancialSummary: React.FC = () => {
   const calculateFinancialMetrics = (current: Item[], previous: Item[]): SummaryMetric[] => {
     // Current period calculations
     const currentIncome = current
-      .filter(t => !t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount?.toString() || '0'), 0);
+      .filter(t => !categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const currentExpenses = current
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount?.toString() || '0'), 0);
+      .filter(t => categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const currentBalance = currentIncome - currentExpenses;
     const currentSavingsRate = currentIncome > 0 ? (currentBalance / currentIncome) * 100 : 0;
 
     // Previous period calculations
     const previousIncome = previous
-      .filter(t => !t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount?.toString() || '0'), 0);
+      .filter(t => !categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const previousExpenses = previous
-      .filter(t => t.category.isExpense)
-      .reduce((sum, t) => sum + parseFloat(t.amount?.toString() || '0'), 0);
+      .filter(t => categories[t.category].expense)
+      .reduce((sum, t) => sum + t.value, 0);
 
     const previousBalance = previousIncome - previousExpenses;
 

@@ -3,7 +3,7 @@ import { AiRecommendation } from '../../../types/AiRecommendation';
 export interface FormattedRecommendation {
   Título: string;
   Tipo: string;
-  Conteúdo: string;
+  Conteúdo: string | undefined;
   'Data de Criação': string;
   Lida: string;
 }
