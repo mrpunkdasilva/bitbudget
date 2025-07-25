@@ -1,0 +1,49 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.resume-item {
+  flex: 1;
+  text-align: center;
+  padding: v.$spacing-sm;
+  border-radius: v.$border-radius;
+  background-color: v.$light-gray;
+  box-shadow: v.$box-shadow;
+  border: 1px solid v.$gray;
+  
+  &__title {
+    font-size: v.$font-size-small;
+    color: v.$text-color-light;
+    margin-bottom: v.$spacing-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  
+  &__info {
+    font-size: v.$font-size-large;
+    font-weight: bold;
+    
+    &--income {
+      color: v.$income-color;
+    }
+    
+    &--expense {
+      color: v.$expense-color;
+    }
+    
+    &--balance {
+      color: v.$text-color;
+    }
+  }
+  
+  @include m.mobile {
+    padding: v.$spacing-xs;
+    
+    &__title {
+      font-size: v.$font-size-xsmall;
+    }
+    
+    &__info {
+      font-size: v.$font-size-medium;
+    }
+  }
+}

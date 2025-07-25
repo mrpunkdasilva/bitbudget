@@ -1,0 +1,85 @@
+@use '../variables' as v;
+@use '../mixins' as m;
+
+.table-wrapper {
+  overflow-x: auto;
+  width: 100%;
+  margin-bottom: v.$spacing-lg;
+  border: 2px solid v.$gray;
+  border-radius: v.$border-radius;
+  box-shadow: v.$box-shadow;
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px; /* Ensure table doesn't get too small */
+  }
+  
+  th,
+  td {
+    padding: v.$spacing-sm v.$spacing-md;
+    border-bottom: 1px solid v.$gray;
+    text-align: left;
+  }
+  
+  th {
+    background-color: v.$primary-color;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: v.$font-size-small;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  tr:last-child td {
+    border-bottom: none;
+  }
+  
+  .table__head-column {
+    &--date {
+      width: 100px;
+    }
+    &--category {
+      width: 130px;
+    }
+    &--value {
+      width: 150px;
+    }
+    &--actions {
+      width: 100px;
+    }
+  }
+  
+  .table__empty-message {
+    text-align: center;
+    padding: v.$spacing-lg;
+    color: v.$text-color-light;
+    font-style: italic;
+  }
+  
+  // Responsive adjustments for smaller screens
+  @include m.mobile {
+    table {
+      min-width: unset; /* Allow table to shrink on very small screens */
+    }
+    
+    th,
+    td {
+      padding: v.$spacing-xs v.$spacing-sm;
+      font-size: v.$font-size-small;
+    }
+    
+    // Hide less important columns on small screens
+    .table__head-column,
+    .table-item__column {
+      &--category,
+      &--actions {
+        // You might want to hide these or change their display
+        // display: none; 
+      }
+    }
+  }
+}
