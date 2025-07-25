@@ -36,7 +36,7 @@
   }
   
   @include m.mobile {
-    padding: v.$spacing-xs;
+    padding: v.$spacing-xs; // Added comment to force re-compilation
     
     &__title {
       font-size: v.$font-size-xsmall;

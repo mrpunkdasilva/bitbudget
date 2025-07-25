@@ -5,10 +5,10 @@
 
 // Components
 @use 'components/InfoArea';
-@use 'components/ResumeItem';
+@use 'components/_ResumeItem';
 @use 'components/InputArea';
 @use 'components/ChartArea';
-@use 'components/TableArea';
+@use 'components/_TableArea' as TableArea;
 @use 'components/_TableItem' as TableItem;
 @use 'components/_FilterArea' as FilterArea;
 @use 'components/_ExportArea' as ExportArea;
@@ -221,9 +221,10 @@
   
   &__header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: v.$spacing-md;
+    margin-bottom: v.$spacing-lg;
     padding-bottom: v.$spacing-sm;
     border-bottom: 2px solid rgba(#00cc88, 0.3);
     cursor: pointer;

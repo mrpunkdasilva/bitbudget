@@ -296,6 +296,8 @@ input, select {
 
 .body {
   width: 100%;
+  max-width: 1400px; /* Add max-width to prevent stretching on very large screens */
+  margin: 0 auto; /* Center the body */
   min-height: 600px;
   margin-bottom: v.$spacing-xl;
   padding: 0 v.$spacing-lg;
@@ -308,6 +310,10 @@ input, select {
   
   @media (max-width: 768px) {
     padding: 0 v.$spacing-md;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 v.$spacing-sm; /* Reduce padding on very small screens */
   }
   
   // Melhorias de acessibilidade
@@ -325,6 +331,103 @@ input, select {
       background-color: white !important;
       color: black !important;
       border-color: black !important;
+    }
+  }
+}
+/* Auth Forms */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: v.$white;
+  border-radius: v.$border-radius;
+  box-shadow: v.$box-shadow;
+  border: 2px solid v.$primary-color;
+
+  h2 {
+    color: v.$primary-color;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .form-group {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: v.$text-color;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid v.$gray;
+      border-radius: v.$border-radius;
+      font-size: 1rem;
+
+      &:focus {
+        outline: none;
+        border-color: v.$primary-color;
+        box-shadow: 0 0 0 2px rgba(v.$primary-color, 0.2);
+      }
+    }
+  }
+
+  .btn {
+    width: 100%;
+    padding: 0.75rem;
+    border: none;
+    border-radius: v.$border-radius;
+    background-color: v.$primary-color;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: color.adjust(v.$primary-color, $lightness: -10%);
+    }
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  }
+
+  .auth-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+    width: 100%;
+
+    @include m.tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: v.$primary-color;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-decoration: underline;
+
+      &:hover {
+        color: color.adjust(v.$primary-color, $lightness: -10%);
+      }
     }
   }
 }

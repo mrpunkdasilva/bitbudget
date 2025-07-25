@@ -126,18 +126,9 @@
       padding-right: v.$spacing-sm;
     }
 
-    &[type="number"] {
+    &[type="text"] {
       text-align: right;
       padding-right: v.$spacing-md;
-
-      &::before {
-        content: 'R$';
-        position: absolute;
-        left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        color: rgba(v.$text-color, 0.7);
-      }
     }
   }
 

@@ -225,10 +225,13 @@ export const InputArea = ({ onAdd }: Props) => {
       <label className="input-area__label">
         <div className="input-area__title">Valor</div>
         <input
-          type="number"
+          type="text"
           className={`input-area__input ${valueError ? 'input-area__input--error' : ''}`}
-          value={valueField}
-          onChange={e => setValueField(parseFloat(e.target.value) || 0)}
+          value={valueField === 0 ? '' : valueField.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          onChange={e => {
+            const rawValue = e.target.value.replace(',', '.');
+            setValueField(parseFloat(rawValue) || 0);
+          }}
           min="0.01"
           step="0.01"
           aria-required="true"

@@ -95,20 +95,29 @@
 
 // ===== Web3 Container =====
 .web3-container {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-wrap: wrap;
   gap: v.$spacing-lg;
   margin-top: v.$spacing-lg;
   
-  @include m.tablet {
-    grid-template-columns: 1fr 2fr;
+  .web3-left-column {
+    flex: 1;
+    min-width: 300px; /* Adjust as needed */
+    gap: v.$spacing-lg;
   }
   
-  .web3-left-column,
   .web3-right-column {
-    display: flex;
-    flex-direction: column;
+    flex: 2;
+    min-width: 300px; /* Adjust as needed */
     gap: v.$spacing-lg;
+  }
+  
+  @include m.tablet {
+    .web3-left-column,
+    .web3-right-column {
+      width: auto;
+      max-width: none;
+    }
   }
 }
 

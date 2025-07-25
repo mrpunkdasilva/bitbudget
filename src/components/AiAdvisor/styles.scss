@@ -519,49 +519,6 @@
   }
 }
 
-// Melhorias na seção de IA
-.ai-section {
-  margin: 2rem 0;
-  background: var(--card-bg);
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  overflow: hidden;
-  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
-  
-  &__header {
-    padding: 1.5rem 2rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-    
-    &:hover {
-      background-color: rgba(0, 204, 136, 0.05);
-    }
-  }
-  
-  &__title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.3rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
-    
-    span {
-      display: flex;
-      align-items: center;
-    }
-  }
-  
-  &__subtitle {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-  
-  // Adicionar padding interno quando expandido
-  &__content {
-    padding: 0 2rem 2rem;
-  }
-}
+
 
 
