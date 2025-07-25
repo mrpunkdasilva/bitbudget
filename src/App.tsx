@@ -15,7 +15,7 @@ import { WalletConnect } from './components/Web3/WalletConnect';
 import { AssetsList } from './components/Web3/AssetsList';
 import { CryptoPriceCards } from './components/Web3/CryptoPriceCards';
 import { PortfolioStats } from './components/Web3/PortfolioStats';
-import { AiAdvisorButton } from './components/AiAdvisor/AiAdvisorButton';
+
 import { RecommendationsList } from './components/AiAdvisor/RecommendationsList';
 import { SmartInsights } from './components/SmartInsights';
 import { SmartAlerts } from './components/SmartAlerts';
@@ -322,8 +322,7 @@ const App = () => {
           {aiExpanded && <RecommendationsList />}
         </div>
 
-        {/* Botão flutuante de IA */}
-        <AiAdvisorButton />
+        
 
         <TableArea list={displayList} onDeleteItem={handleDeleteItem} />
       </div>

@@ -138,7 +138,7 @@
   position: relative;
   overflow: visible;
   height: auto;
-  min-height: 220px;
+  
   display: flex;
   flex-direction: column;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
@@ -364,25 +364,13 @@
 
 // Melhorias no grid de recomendações
 .recommendations__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
   width: 100%;
   
-  @media (max-width: 1400px) {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
-  
-  @media (max-width: 1200px) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  }
-  
-  @media (max-width: 992px) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 }
@@ -440,48 +428,7 @@
   }
 }
 
-// Botão flutuante de IA
-.ai-advisor-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00cc88, #00a676);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 204, 136, 0.5);
-  border: none;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  font-size: 1.5rem;
-  
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 204, 136, 0.6);
-  }
-  
-  .unread-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #ff4757;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(255, 71, 87, 0.5);
-  }
-}
+
 
 // Ajustes responsivos melhorados
 @media (max-width: 768px) {
@@ -617,45 +564,4 @@
   }
 }
 
-// Botão flutuante de IA
-.ai-advisor-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00cc88, #00a676);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 204, 136, 0.5);
-  border: none;
-  z-index: 1000;
-  transition: all 0.3s ease;
-  font-size: 1.5rem;
-  
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 204, 136, 0.6);
-  }
-  
-  .unread-count {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: #ff4757;
-    color: white;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(255, 71, 87, 0.5);
-  }
-}
+

@@ -95,7 +95,7 @@ export const RecommendationsList: React.FC = () => {
       </div>
 
       <p className="recommendation-card__description">
-        {truncateText(recommendation.description || recommendation.content)}
+        {recommendation.description || recommendation.content}
       </p>
 
       <div className="recommendation-card__footer">
