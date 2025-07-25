@@ -40,19 +40,13 @@ export const InputArea = ({ onAdd }: Props) => {
       return false;
     }
 
-    // Verificar se a data não é futura (mais de 1 dia à frente)
-    const futureLimit = new Date();
-    futureLimit.setDate(today.getDate() + 1);
-    if (selectedDate > futureLimit) {
-      setDateError('A data não pode ser mais de 1 dia no futuro!');
-      return false;
-    }
+    // Verificar se a data não é futura (apenas hoje ou passado)
+    // Normaliza as datas para comparar apenas o dia, mês e ano
+    const selectedDateNormalized = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate());
+    const todayNormalized = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-    // Verificar se a data não é muito antiga (mais de 5 anos atrás)
-    const pastLimit = new Date();
-    pastLimit.setFullYear(today.getFullYear() - 5);
-    if (selectedDate < pastLimit) {
-      setDateError('A data não pode ser mais de 5 anos no passado!');
+    if (selectedDateNormalized > todayNormalized) {
+      setDateError('A data não pode ser futura!');
       return false;
     }
 
@@ -145,22 +139,20 @@ export const InputArea = ({ onAdd }: Props) => {
     }
 
     // Adiciona uma pequena animação de carregamento
-    setTimeout(() => {
-      try {
-        onAdd({
-          date: new Date(dateField),
-          category: categoryField,
-          title: titleField,
-          value: valueField,
-        });
-        clearFields();
-      } catch (err) {
-        error('Erro ao adicionar item. Tente novamente.');
-        console.error(err);
-      } finally {
-        setIsSubmitting(false);
-      }
-    }, 300);
+    try {
+      onAdd({
+        date: new Date(dateField),
+        category: categoryField,
+        title: titleField,
+        value: valueField,
+      });
+      clearFields();
+    } catch (err) {
+      error('Erro ao adicionar item. Tente novamente.');
+      console.error(err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const clearFields = () => {

@@ -7,14 +7,15 @@
   margin-top: 35px; // Aumentado para dar espaço ao rótulo
   margin-bottom: v.$spacing-lg;
   display: flex;
-  align-items: flex-end;
   border: 3px solid v.$primary-color;
   position: relative;
   overflow: visible; /* Garantir que o rótulo não seja cortado */
   background-color: color.adjust(v.$white, $lightness: -3%);
   padding: v.$spacing-lg v.$spacing-md;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  
+  flex-direction: column;
+  align-items: stretch;
+
   &::before {
     content: '';
     position: absolute;
@@ -25,7 +26,7 @@
     background: linear-gradient(90deg, v.$primary-color, v.$secondary-color, v.$primary-color);
     z-index: 1;
   }
-  
+
   &::after {
     content: 'Nova Transação';
     position: absolute;
@@ -50,17 +51,12 @@
     line-height: 1; /* Garantir que o texto fique centralizado verticalmente */
     overflow: visible; /* Garantir que o texto não seja cortado */
   }
-  
-  @include m.mobile {
-    flex-direction: column;
-    align-items: stretch;
-  }
 
   &__label {
     flex: 1;
     margin: v.$spacing-sm;
     position: relative;
-    
+
     @include m.mobile {
       width: 100%;
     }
@@ -75,7 +71,7 @@
     letter-spacing: 1px;
     display: flex;
     align-items: center;
-    
+
     &::before {
       content: '';
       display: inline-block;
@@ -86,7 +82,7 @@
       border-radius: 50%;
     }
   }
-  
+
   // Remover o bullet point do botão Adicionar
   .input-area__label:last-child .input-area__title::before {
     display: none;
@@ -104,35 +100,36 @@
     background-color: color.adjust(v.$white, $lightness: -5%);
     color: v.$text-color;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    
+    gap: 12px;
+
     &:hover {
       border-color: rgba(v.$primary-color, 0.5);
     }
-    
+
     &:focus {
       border-color: v.$primary-color;
       box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
       background-color: v.$white;
     }
-    
+
     &--error {
       border-color: v.$danger-color;
       background-color: rgba(v.$danger-color, 0.05);
-      
+
       &:focus {
         border-color: v.$danger-color;
         box-shadow: 0 0 0 3px rgba(v.$danger-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
       }
     }
-    
+
     &[type="date"] {
       padding-right: v.$spacing-sm;
     }
-    
+
     &[type="number"] {
       text-align: right;
       padding-right: v.$spacing-md;
-      
+
       &::before {
         content: 'R$';
         position: absolute;
@@ -143,14 +140,13 @@
       }
     }
   }
-  
+
   &__error {
     color: v.$danger-color;
     font-size: v.$font-size-small;
-    margin-top: 5px;
+    margin: 15px 0;
     font-weight: bold;
     animation: shake 0.5s ease-in-out;
-    position: absolute;
     background-color: rgba(v.$danger-color, 0.1);
     padding: 2px 8px;
     border-radius: v.$border-radius;
@@ -175,27 +171,27 @@
     background-repeat: no-repeat;
     background-position: right 15px center;
     padding-right: 40px;
-    
+
     &:hover {
       border-color: rgba(v.$primary-color, 0.5);
     }
-    
+
     &:focus {
       border-color: v.$primary-color;
       box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
       background-color: v.$white;
     }
-    
+
     &--error {
       border-color: v.$danger-color;
       background-color: rgba(v.$danger-color, 0.05);
-      
+
       &:focus {
         border-color: v.$danger-color;
         box-shadow: 0 0 0 3px rgba(v.$danger-color, 0.2), inset 0 1px 3px rgba(0, 0, 0, 0.1);
       }
     }
-    
+
     option {
       background-color: v.$white;
       color: v.$text-color;
@@ -220,7 +216,7 @@
     position: relative;
     box-shadow: 0 4px 0 color.adjust(v.$primary-color, $lightness: -15%);
     overflow: hidden;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -229,48 +225,48 @@
       width: 200%;
       height: 200%;
       background: linear-gradient(
-        to right,
-        rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.3),
-        rgba(255, 255, 255, 0)
+                      to right,
+                      rgba(255, 255, 255, 0),
+                      rgba(255, 255, 255, 0.3),
+                      rgba(255, 255, 255, 0)
       );
       transform: rotate(30deg);
       opacity: 0;
       transition: opacity 0.3s;
     }
-    
+
     &:hover {
       background-color: color.adjust(v.$primary-color, $lightness: 5%);
       transform: translateY(-2px);
       box-shadow: 0 6px 0 color.adjust(v.$primary-color, $lightness: -15%);
-      
+
       &::before {
         opacity: 1;
         animation: shine 1.5s infinite;
       }
     }
-    
+
     &:active {
       background-color: color.adjust(v.$primary-color, $lightness: -5%);
       transform: translateY(2px);
       box-shadow: 0 2px 0 color.adjust(v.$primary-color, $lightness: -15%);
     }
-    
+
     &:disabled {
       opacity: 0.7;
       cursor: not-allowed;
       background-color: v.$gray;
       box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -15%);
-      
+
       &:hover {
         transform: none;
         box-shadow: 0 4px 0 color.adjust(v.$gray, $lightness: -15%);
       }
     }
-    
+
     &--loading {
       position: relative;
-      
+
       &::after {
         content: '';
         position: absolute;
@@ -279,16 +275,16 @@
         width: 100%;
         height: 100%;
         background: linear-gradient(
-          90deg,
-          transparent,
-          rgba(255, 255, 255, 0.2),
-          transparent
+                        90deg,
+                        transparent,
+                        rgba(255, 255, 255, 0.2),
+                        transparent
         );
         animation: loading 1.5s infinite;
       }
     }
   }
-  
+
   @keyframes shine {
     0% {
       left: -100%;
@@ -303,7 +299,7 @@
       opacity: 0;
     }
   }
-  
+
   @keyframes loading {
     0% {
       transform: translateX(-100%);
@@ -312,7 +308,7 @@
       transform: translateX(100%);
     }
   }
-  
+
   @keyframes shake {
     0%, 100% {
       transform: translateX(0);
